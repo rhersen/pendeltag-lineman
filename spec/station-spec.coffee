@@ -1,5 +1,5 @@
 describe 'station', ->
-    beforeEach( -> $('<nav> <span id="predecessor">9524</span> <span id="title">Tullinge</span> <span id="successor">9526</span> </nav> <header> <span id="id">9525</span> <time id="updated">14:48:01</time> <button class="clear">⎚</button> <span id="expired">12.4⊂12.3⊃11.0</span> </header> <section class="table"> <span class="time">14:52:00</span> <span class="destination">Märsta</span> <span class="countdown">3:46.5</span> <span class="time">15:07:00</span> <span class="destination">Märsta</span> <span class="countdown">18:46.5</span> </section>').appendTo('body'))
+    beforeEach( -> $('<nav> <span id="sodertalje" class="siteid">9520</span> <span id="predecessor" class="siteid">9524</span> <span id="title" class="siteid">Tullinge</span> <span id="successor" class="siteid">9526</span> <span id="sodra" class="siteid">9530</span> </nav> <header> <span id="id">9525</span> <time id="updated">14:48:01</time> <button class="clear">⎚</button> <span id="expired">12.4⊂12.3⊃11.0</span> </header> <section class="table"> <span class="time">14:52:00</span> <span class="destination">Märsta</span> <span class="countdown">3:46.5</span> <span class="time">15:07:00</span> <span class="destination">Märsta</span> <span class="countdown">18:46.5</span> </section>').appendTo('body'))
     afterEach( ->
          $('nav').remove()
          $('header').remove()
@@ -9,24 +9,16 @@ describe 'station', ->
         {
             JourneyDirection: 2,
             "Destination": "Märsta",
-            Stops: [
-                {
-                    "SiteId": 9526,
-                    "StopAreaName": "Femlingsberg",
-                    "ExpectedDateTime": "2013-01-02T13:37:00"
-                }
-            ]
+            "SiteId": 9526,
+            "StopAreaName": "Femlingsberg",
+            "ExpectedDateTime": "2013-01-02T13:37:00"
         },
         {
             JourneyDirection: 1,
             "Destination": "Östertälje",
-            Stops: [
-                {
-                    "ExpectedDateTime": "2013-01-02T13:47:00",
-                    "SiteId": 9526,
-                    "StopAreaName": "Femlingsberg"
-                }
-            ]
+            "ExpectedDateTime": "2013-01-02T13:47:00",
+            "SiteId": 9526,
+            "StopAreaName": "Femlingsberg"
         }
     ]
     
@@ -34,13 +26,9 @@ describe 'station', ->
         createStation().setResult([{
                 JourneyDirection: 2,
                 "Destination": "Märsta",
-                Stops: [
-                    {
-                        "SiteId": 9526,
-                        "StopAreaName": "Femlingsberg",
-                        "ExpectedDateTime": "2013-01-02T13:37:00"
-                    }
-                ]
+                "SiteId": 9526,
+                "StopAreaName": "Femlingsberg",
+                "ExpectedDateTime": "2013-01-02T13:37:00"
             }])
         expect($('span.countdown').length).toBe 1
 
@@ -69,11 +57,13 @@ describe 'station', ->
         createStation(false).setResult(fixture)
         expect($('#successor').data('events').mouseup).toBeDefined
         expect($('#predecessor').data('events').mouseup).toBeDefined
+        expect($('#sodra').data('events').mouseup).toBeDefined
 
     it 'should bind touchend', ->
         createStation(true).setResult(fixture)
         expect($('#successor').data('events').touchend).toBeDefined
         expect($('#predecessor').data('events').touchend).toBeDefined
+        expect($('#sodertalje').data('events').touchend).toBeDefined
 
     it 'should set id', ->
         createStation().init('9526')

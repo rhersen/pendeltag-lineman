@@ -16,19 +16,19 @@ function createStation(isTouch) {
         }
 
         function getPredecessor() {
-            return _.first(_.first(trains).Stops).SiteId - 1;
+            return _.first(trains).SiteId - 1;
         }
 
         function getCurrent() {
-            return _.first(_.first(trains).Stops).SiteId + 0;
+            return _.first(trains).SiteId + 0;
         }
 
         function getSuccessor() {
-            return _.first(_.first(trains).Stops).SiteId + 1;
+            return _.first(trains).SiteId + 1;
         }
 
         function updateHtml() {
-            $('#title').html(names.abbreviate(_.first(_.first(trains).Stops).StopAreaName));
+            $('#title').html(names.abbreviate(_.first(trains).StopAreaName));
             $('#predecessor').html(getPredecessor());
             $('#successor').html(getSuccessor());
             $('#updated').html(trains.updated);
@@ -43,7 +43,7 @@ function createStation(isTouch) {
 
         function createDivRow(departure) {
                 var dir = 'direction' + departure.JourneyDirection;
-                var dateTime = _.first(departure.Stops).ExpectedDateTime;
+                var dateTime = departure.ExpectedDateTime;
                 var table = $('.table');
                 $('<time></time>')
                     .appendTo(table)
@@ -56,7 +56,7 @@ function createStation(isTouch) {
                 $('<span></span>').appendTo(table)
                     .addClass('countdown')
                     .addClass(dir)
-                    .data('time', _.first(departure.Stops).ExpectedDateTime);
+                    .data('time', departure.ExpectedDateTime);
         }
 
         function bindEvent() {
@@ -70,6 +70,8 @@ function createStation(isTouch) {
             $('#predecessor').bind(ev, getRequestSender(getPredecessor()));
             $('#title').bind(ev, getRequestSender(getCurrent()));
             $('#successor').bind(ev, getRequestSender(getSuccessor()));
+            $('#sodertalje').bind(ev, getRequestSender('9520'));
+            $('#sodra').bind(ev, getRequestSender('9530'));
         }
 
         updateTimer();
@@ -124,11 +126,11 @@ function createStation(isTouch) {
         $('#successor').unbind('mouseup touchend').html(' ');
 
         $.ajax({
-            url: '/departures/' + id + '.json',
+            url: '/departures/' + id,
             dataType: 'json',
             cache: false,
             success: function (result) {
-                setResult(result, new Date().getTime());
+                setResult(result.DPS.Trains.DpsTrain, new Date().getTime());
             }
         });
 
