@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta content="true" name="HandheldFriendly">
+    <meta content="width=device-width, height=device-height, user-scalable=no" name="viewport">
     <title><%= pkg.name %></title>
 
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />

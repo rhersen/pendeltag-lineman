@@ -124,6 +124,8 @@ function createStation(isTouch) {
         $('#title').unbind('mouseup touchend').html(id);
         $('#predecessor').unbind('mouseup touchend').html(' ');
         $('#successor').unbind('mouseup touchend').html(' ');
+        $('#sodertalje').unbind('mouseup touchend');
+        $('#sodra').unbind('mouseup touchend');
 
         $.ajax({
             url: '/departures/' + id,
