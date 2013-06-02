@@ -42,27 +42,31 @@ function createStation(isTouch) {
         }
 
         function createDivRow(departure) {
-                var dir = 'direction' + departure.JourneyDirection;
-                var dateTime = departure.ExpectedDateTime;
-                var table = $('.table');
-                $('<time></time>')
-                    .appendTo(table)
-                    .html(time.getTime(dateTime))
-                    .addClass(dir);
-                $('<span></span>').appendTo(table)
-                    .html(names.abbreviate(departure.Destination))
-                    .addClass('destination')
-                    .addClass(dir);
-                $('<span></span>').appendTo(table)
-                    .addClass('countdown')
-                    .addClass(dir)
-                    .data('time', departure.ExpectedDateTime);
+            var dir = 'direction' + departure.JourneyDirection;
+            var dateTime = departure.ExpectedDateTime;
+            var table = $('.table');
+            $('<time></time>')
+                .appendTo(table)
+                .html(time.getTime(dateTime))
+                .addClass(dir);
+            $('<span></span>').appendTo(table)
+                .html(names.abbreviate(departure.Destination))
+                .addClass('destination')
+                .addClass(dir);
+            $('<span></span>').appendTo(table)
+                .addClass('countdown')
+                .addClass(dir)
+                .data('time', departure.ExpectedDateTime);
         }
 
         function bindEvent() {
             function getRequestSender(id) {
                 return function () {
                     sendRequest(id);
+                    $('nav#stations').hide();
+                    if (!intervalId) {
+                        intervalId = setInterval(tick, 256);
+                    }
                 };
             }
 
@@ -70,7 +74,9 @@ function createStation(isTouch) {
             $('#predecessor').bind(ev, getRequestSender(getPredecessor()));
             $('#title').bind(ev, getRequestSender(getCurrent()));
             $('#successor').bind(ev, getRequestSender(getSuccessor()));
+            $('#karlberg').bind(ev, getRequestSender('9510'));
             $('#sodertalje').bind(ev, getRequestSender('9520'));
+            $('#tullinge').bind(ev, getRequestSender('9525'));
             $('#sodra').bind(ev, getRequestSender('9530'));
         }
 
@@ -82,26 +88,8 @@ function createStation(isTouch) {
     }
 
     function init(id, interval) {
-        function tick() {
-            function setCountdowns() {
-                var now = new Date();
-
-                $('span.countdown').each(function () {
-                    var time = $(this).data('time');
-                    $(this).html(countdown.getCountdown(time, now));
-                });
-            }
-
-            $('#expired').html((timer.getDebugString()));
-
-            setCountdowns();
-
-            if (timer.isExpired(new Date())) {
-                sendRequest($('span#id').text());
-            }
-        }
-
         $('span#id').text(id);
+        $('nav#stations').hide();
 
         if (isTouch) {
             $('.table').addClass('touch');
@@ -109,12 +97,33 @@ function createStation(isTouch) {
             $('.table').addClass('mouse');
         }
 
-        $('button.clear').click(function () {
+        $('span.clear').click(function () {
             clearInterval(intervalId);
+            intervalId = false;
+            $('nav#stations').show();
         });
 
         if (interval) {
             intervalId = setInterval(tick, interval);
+        }
+    }
+
+    function tick() {
+        function setCountdowns() {
+            var now = new Date();
+
+            $('span.countdown').each(function () {
+                var time = $(this).data('time');
+                $(this).html(countdown.getCountdown(time, now));
+            });
+        }
+
+        $('#expired').html((timer.getDebugString()));
+
+        setCountdowns();
+
+        if (timer.isExpired(new Date())) {
+            sendRequest($('span#id').text());
         }
     }
 
@@ -124,7 +133,9 @@ function createStation(isTouch) {
         $('#title').unbind('mouseup touchend').html(id);
         $('#predecessor').unbind('mouseup touchend').html(' ');
         $('#successor').unbind('mouseup touchend').html(' ');
+        $('#karlberg').unbind('mouseup touchend');
         $('#sodertalje').unbind('mouseup touchend');
+        $('#tullinge').unbind('mouseup touchend');
         $('#sodra').unbind('mouseup touchend');
 
         $.ajax({

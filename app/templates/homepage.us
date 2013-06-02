@@ -10,10 +10,15 @@
   <body>
     <script type="text/javascript" src="<%= js %>"></script>
     <nav>
-      <span class="siteid" id="sodertalje">9520</span>
       <span class="siteid" id="predecessor">9524</span>
       <span class="siteid" id="title">title</span>
       <span class="siteid" id="successor">9526</span>
+      <span class="clear">◼</span>
+    </nav>
+    <nav id="stations">
+      <span class="siteid" id="karlberg">9510</span>
+      <span class="siteid" id="sodertalje">9520</span>
+      <span class="siteid" id="tullinge">9525</span>
       <span class="siteid" id="sodra">9530</span>
     </nav>
     <header>
