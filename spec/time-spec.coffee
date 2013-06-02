@@ -8,3 +8,6 @@ describe 'time.diff', ->
 
     it 'should return seconds too if non-zero', ->
         expect(time.getTime('2013-01-02T13:37:17')).toBe '13:37:17'
+
+    it 'should return input if non-parseable', ->
+        expect(time.getTime('lEET')).toBe 'lEET'
