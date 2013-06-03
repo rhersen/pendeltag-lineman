@@ -55,15 +55,13 @@ describe 'station', ->
 
     it 'should bind mouseup', ->
         createStation(false).setResult(fixture)
-        expect($('#successor').data('events').mouseup).toBeDefined
-        expect($('#predecessor').data('events').mouseup).toBeDefined
-        expect($('#sodra').data('events').mouseup).toBeDefined
+        expect($('#successor').data('events')).toBeDefined()
+        expect($('#predecessor').data('events')).toBeDefined()
 
     it 'should bind touchend', ->
         createStation(true).setResult(fixture)
-        expect($('#successor').data('events').touchend).toBeDefined
-        expect($('#predecessor').data('events').touchend).toBeDefined
-        expect($('#sodertalje').data('events').touchend).toBeDefined
+        expect($('#successor').data('events')).toBeDefined()
+        expect($('#predecessor').data('events')).toBeDefined()
 
     it 'should set id', ->
         createStation().init('9526')

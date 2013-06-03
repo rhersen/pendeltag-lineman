@@ -60,24 +60,10 @@ function createStation(isTouch) {
         }
 
         function bindEvent() {
-            function getRequestSender(id) {
-                return function () {
-                    sendRequest(id);
-                    $('nav#stations').hide();
-                    if (!intervalId) {
-                        intervalId = setInterval(tick, 256);
-                    }
-                };
-            }
-
             var ev = isTouch ? 'touchend' : 'mouseup';
             $('#predecessor').bind(ev, getRequestSender(getPredecessor()));
             $('#title').bind(ev, getRequestSender(getCurrent()));
             $('#successor').bind(ev, getRequestSender(getSuccessor()));
-            $('#karlberg').bind(ev, getRequestSender('9510'));
-            $('#sodertalje').bind(ev, getRequestSender('9520'));
-            $('#tullinge').bind(ev, getRequestSender('9525'));
-            $('#sodra').bind(ev, getRequestSender('9530'));
         }
 
         updateTimer();
@@ -87,9 +73,25 @@ function createStation(isTouch) {
         bindEvent();
     }
 
+    function getRequestSender(id) {
+        return function () {
+            sendRequest(id);
+            $('nav#stations').hide();
+            if (!intervalId) {
+                intervalId = setInterval(tick, 256);
+            }
+        };
+    }
+
     function init(id, interval) {
         $('span#id').text(id);
         $('nav#stations').hide();
+
+        var ev = isTouch ? 'touchend' : 'mouseup';
+        $('#karlberg').bind(ev, getRequestSender('9510'));
+        $('#sodertalje').bind(ev, getRequestSender('9520'));
+        $('#tullinge').bind(ev, getRequestSender('9525'));
+        $('#sodra').bind(ev, getRequestSender('9530'));
 
         if (isTouch) {
             $('.table').addClass('touch');
@@ -133,10 +135,6 @@ function createStation(isTouch) {
         $('#title').unbind('mouseup touchend').html(id);
         $('#predecessor').unbind('mouseup touchend').html(' ');
         $('#successor').unbind('mouseup touchend').html(' ');
-        $('#karlberg').unbind('mouseup touchend');
-        $('#sodertalje').unbind('mouseup touchend');
-        $('#tullinge').unbind('mouseup touchend');
-        $('#sodra').unbind('mouseup touchend');
 
         $.ajax({
             url: '/departures/' + id,
