@@ -83,10 +83,7 @@ function createStation(isTouch) {
         };
     }
 
-    function init(id, interval) {
-        $('span#id').text(id);
-        $('nav#stations').hide();
-
+    function init(interval) {
         var ev = isTouch ? 'touchend' : 'mouseup';
         $('#karlberg').bind(ev, getRequestSender('9510'));
         $('#sodertalje').bind(ev, getRequestSender('9520'));

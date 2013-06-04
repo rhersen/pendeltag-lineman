@@ -27,6 +27,6 @@
       <span id="expired">?</span>
     </header>
     <section class="table"></section>
-    <script>createStation().init($('#id').text(), 256)</script>
+    <script>createStation().init()</script>
   </body>
 </html>

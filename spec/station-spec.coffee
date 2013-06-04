@@ -62,7 +62,3 @@ describe 'station', ->
         createStation(true).setResult(fixture)
         expect($('#successor').data('events')).toBeDefined()
         expect($('#predecessor').data('events')).toBeDefined()
-
-    it 'should set id', ->
-        createStation().init('9526')
-        expect($('#id').html()).toBe '9526'
