@@ -9,7 +9,7 @@ describe 'station', ->
         {
             JourneyDirection: 2,
             "Destination": "Märsta",
-            "SiteId": 9526,
+            "SiteId": "9526",
             "StopAreaName": "Femlingsberg",
             "ExpectedDateTime": "2013-01-02T13:37:00"
         },
@@ -17,16 +17,16 @@ describe 'station', ->
             JourneyDirection: 1,
             "Destination": "Östertälje",
             "ExpectedDateTime": "2013-01-02T13:47:00",
-            "SiteId": 9526,
+            "SiteId": "9526",
             "StopAreaName": "Femlingsberg"
         }
     ]
-    
+
     it 'should remove table rows', ->
         createStation().setResult([{
                 JourneyDirection: 2,
                 "Destination": "Märsta",
-                "SiteId": 9526,
+                "SiteId": "9526",
                 "StopAreaName": "Femlingsberg",
                 "ExpectedDateTime": "2013-01-02T13:37:00"
             }])

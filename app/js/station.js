@@ -15,16 +15,20 @@ function createStation(isTouch) {
             timer.setUpdated(trains.updated);
         }
 
+        function getSiteId() {
+            return parseInt(_.first(trains).SiteId);
+        }
+
         function getPredecessor() {
-            return _.first(trains).SiteId - 1;
+            return getSiteId() - 1;
         }
 
         function getCurrent() {
-            return _.first(trains).SiteId + 0;
+            return getSiteId() + 0;
         }
 
         function getSuccessor() {
-            return _.first(trains).SiteId + 1;
+            return getSiteId() + 1;
         }
 
         function updateHtml() {
