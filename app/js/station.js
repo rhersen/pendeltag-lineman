@@ -16,7 +16,7 @@ function createStation(isTouch) {
         }
 
         function getSiteId() {
-            return parseInt(_.first(trains).SiteId);
+            return parseInt(_.first(trains).SiteId, 10);
         }
 
         function getPredecessor() {
