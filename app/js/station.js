@@ -1,6 +1,6 @@
 /*global time: false, expiry: false, names: false, countdown: false, $: false, _: false */
 
-function createStation(isTouch) {
+function createStation() {
     function updatePending() {
         if (timer.isPending()) {
             $('body').addClass('pending');
@@ -43,7 +43,7 @@ function createStation(isTouch) {
         }
 
         function bindEvent() {
-            var ev = isTouch ? 'touchend' : 'mouseup';
+            var ev = 'mouseup';
             $('#predecessor').bind(ev, getRequestSender(getPredecessor()));
             $('#title').bind(ev, getRequestSender(getCurrent()));
             $('#successor').bind(ev, getRequestSender(getSuccessor()));
@@ -69,17 +69,13 @@ function createStation(isTouch) {
     }
 
     function init(interval) {
-        var ev = isTouch ? 'touchend' : 'mouseup';
+        var ev = 'mouseup';
         $('#karlberg').bind(ev, getRequestSender('9510'));
         $('#sodertalje').bind(ev, getRequestSender('9520'));
         $('#tullinge').bind(ev, getRequestSender('9525'));
         $('#sodra').bind(ev, getRequestSender('9530'));
 
-        if (isTouch) {
-            $('#table').addClass('touch');
-        } else {
-            $('#table').addClass('mouse');
-        }
+        $('#table').addClass('mouse');
 
         $('span.clear').click(function() {
             clearInterval(intervalId);

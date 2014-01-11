@@ -45,11 +45,6 @@ describe 'station', ->
         expect($('#table .direction2').length).toBe 1
 
     it 'should bind mouseup', ->
-        createStation(false).setResult(fixture)
-        expect($('#successor').data('events')).toBeDefined()
-        expect($('#predecessor').data('events')).toBeDefined()
-
-    it 'should bind touchend', ->
-        createStation(true).setResult(fixture)
+        createStation().setResult(fixture)
         expect($('#successor').data('events')).toBeDefined()
         expect($('#predecessor').data('events')).toBeDefined()
