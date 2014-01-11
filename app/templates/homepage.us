@@ -26,7 +26,7 @@
       <time id="updated">updated</time>
       <span id="expired">?</span>
     </header>
-    <section class="table"></section>
+    <section id="table"></section>
     <script>createStation().init()</script>
   </body>
 </html>

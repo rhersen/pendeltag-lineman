@@ -9,7 +9,7 @@ function createStation(isTouch) {
         }
     }
 
-    function setResult(trains, currentTimeMillis) {
+    function setResult(resultTrains, currentTimeMillis) {
         function updateTimer() {
             timer.setResponse(currentTimeMillis);
             timer.setUpdated(trains.updated);
@@ -39,28 +39,7 @@ function createStation(isTouch) {
         }
 
         function updateTable() {
-            $('section.table time').remove();
-            $('span.destination').remove();
-            $('span.countdown').remove();
-            _.each(trains, createDivRow);
-        }
-
-        function createDivRow(departure) {
-            var dir = 'direction' + departure.JourneyDirection;
-            var dateTime = departure.ExpectedDateTime;
-            var table = $('.table');
-            $('<time></time>')
-                .appendTo(table)
-                .html(time.getTime(dateTime))
-                .addClass(dir);
-            $('<span></span>').appendTo(table)
-                .html(names.abbreviate(departure.Destination))
-                .addClass('destination')
-                .addClass(dir);
-            $('<span></span>').appendTo(table)
-                .addClass('countdown')
-                .addClass(dir)
-                .data('time', departure.ExpectedDateTime);
+            React.renderComponent(Table({trains: trains}), document.getElementById('table'));
         }
 
         function bindEvent() {
@@ -70,6 +49,8 @@ function createStation(isTouch) {
             $('#successor').bind(ev, getRequestSender(getSuccessor()));
         }
 
+        trains = resultTrains;
+
         updateTimer();
         updatePending();
         updateHtml();
@@ -78,7 +59,7 @@ function createStation(isTouch) {
     }
 
     function getRequestSender(id) {
-        return function () {
+        return function() {
             sendRequest(id);
             $('nav#stations').hide();
             if (!intervalId) {
@@ -95,12 +76,12 @@ function createStation(isTouch) {
         $('#sodra').bind(ev, getRequestSender('9530'));
 
         if (isTouch) {
-            $('.table').addClass('touch');
+            $('#table').addClass('touch');
         } else {
-            $('.table').addClass('mouse');
+            $('#table').addClass('mouse');
         }
 
-        $('span.clear').click(function () {
+        $('span.clear').click(function() {
             clearInterval(intervalId);
             intervalId = false;
             $('nav#stations').show();
@@ -112,22 +93,9 @@ function createStation(isTouch) {
     }
 
     function tick() {
-        function setCountdowns() {
-            var now = new Date();
-
-            $('span.countdown').each(function () {
-                var time = $(this).data('time');
-                $(this).html(countdown.getCountdown(time, now));
-            });
-        }
-
         $('#expired').html((timer.getDebugString()));
 
-        setCountdowns();
-
-        if (timer.isExpired(new Date())) {
-            sendRequest($('span#id').text());
-        }
+        React.renderComponent(Table({trains: trains}), document.getElementById('table'));
     }
 
     function sendRequest(id) {
@@ -141,7 +109,7 @@ function createStation(isTouch) {
             url: '/departures/' + id,
             dataType: 'json',
             cache: false,
-            success: function (result) {
+            success: function(result) {
                 setResult(result.DPS.Trains.DpsTrain, new Date().getTime());
             }
         });
@@ -151,6 +119,7 @@ function createStation(isTouch) {
 
     var timer = expiry.create();
     var intervalId;
+    var trains = [];
 
     return {
         setResult: setResult,

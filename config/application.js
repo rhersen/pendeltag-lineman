@@ -7,6 +7,16 @@
 
 module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application', {
   //Override application configuration here. Common examples follow in the comments.
+  jshint: { files: [ '<%= files.js.app %>' ],
+    options: { curly: true,
+      eqeqeq: true,
+      latedef: true,
+      newcap: false,
+      noarg: true,
+      boss: true,
+      eqnull: true,
+      sub: true,
+      browser: true } },
 
   // API Proxying
   //
