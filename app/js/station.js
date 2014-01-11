@@ -35,7 +35,6 @@ function createStation() {
             $('#title').html(names.abbreviate(_.first(trains).StopAreaName));
             $('#predecessor').html(getPredecessor());
             $('#successor').html(getSuccessor());
-            $('#updated').html(trains.updated);
         }
 
         function updateTable() {
@@ -109,8 +108,6 @@ function createStation() {
                 setResult(result.DPS.Trains.DpsTrain, new Date().getTime());
             }
         });
-
-        $('span#id').text(id);
     }
 
     var timer = expiry.create();
