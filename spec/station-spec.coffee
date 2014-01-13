@@ -9,7 +9,7 @@ describe 'station', ->
     fixture = [
         {
             JourneyDirection: 2,
-            "Destination": "Märsta",
+            "Destination": "Upplands Väsby",
             "SiteId": "9526",
             "StopAreaName": "Femlingsberg",
             "ExpectedDateTime": "2013-01-02T13:37:00"
@@ -43,6 +43,10 @@ describe 'station', ->
         createStation().setResult(fixture)
         expect($('#table .direction1').length).toBe 1
         expect($('#table .direction2').length).toBe 1
+
+    it 'sets destination', ->
+        createStation().setResult(fixture)
+        expect($('#table .direction2 .destination').html()).toBe 'Väsby'
 
     it 'should bind mouseup', ->
         createStation().setResult(fixture)

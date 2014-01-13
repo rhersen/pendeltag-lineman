@@ -5,7 +5,7 @@ var TableRow = React.createClass({
             className: 'direction' + this.props.train.JourneyDirection,
             children: [
                 React.DOM.time({}, time.getTime(dateTime)),
-                React.DOM.span({className: 'destination'}, this.props.train.Destination),
+                React.DOM.span({className: 'destination'}, names.abbreviate(this.props.train.Destination)),
                 React.DOM.span({className: 'countdown'}, countdown.getCountdown(dateTime, new Date()))
             ]
         });
