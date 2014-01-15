@@ -1,4 +1,7 @@
 describe 'time.diff', ->
+    beforeEach(->
+        $('<div id="jasmine_content"></div>').appendTo('body'))
+
     it 'should calculate difference in seconds', ->
         expect(time.diff(3333, 1000).toString()).toBe '2.333'
         expect(time.diff(3133, 1000).toString()).toBe '2.133'

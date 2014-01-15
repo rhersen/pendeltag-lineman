@@ -1,68 +1,33 @@
 /*global time: false, countdown: false */
 
-var expiry = {};
+var Expiry = React.createClass({
+    getInitialState: function() {
+        return {
+            requestTime: undefined,
+            responseTime: undefined
+        };
+    },
 
-expiry.create = function () {
-    var responseTime;
-    var requestTime;
-    var updated;
+    render: function() {
+        var now = new Date().getTime();
+        var timeSinceRequest = this.getTimeSinceRequest(now);
+        var timeSinceResponse = this.getTimeSinceResponse(now);
+        return React.DOM.span({
+            className: this.isPending() ? 'pending' : undefined,
+            children: timeSinceRequest.toFixed(1) + '/' + timeSinceResponse.toFixed(1)
+        });
+    },
 
-    function isExpired(date) {
-        function areTimeLimitsReached(date) {
-            return getTimeSinceUpdate(date) > 30 &&
-                getTimeSinceRequest(date.getTime()) > 20 &&
-                getTimeSinceResponse(date.getTime()) > 10;
-        }
+    getTimeSinceRequest: function(now) {
+        return time.diff(now, this.state.requestTime);
+    },
 
-        return requestTime === undefined || areTimeLimitsReached(date);
+    getTimeSinceResponse: function(now) {
+        return time.diff(now, this.state.responseTime);
+    },
+
+    isPending: function() {
+        return !this.state.responseTime || this.state.responseTime < this.state.requestTime;
     }
 
-    function isPending() {
-        return !responseTime || responseTime < requestTime;
-    }
-
-    function setUpdated(u) {
-        updated = u;
-    }
-
-    function getTimeSinceUpdate(date) {
-        if (updated) {
-            return time.diff(countdown.getNow(date), countdown.millisSinceMidnight(updated));
-        } else {
-            return NaN;
-        }
-    }
-
-    function getTimeSinceRequest(now) {
-        return time.diff(now, requestTime);
-    }
-
-    function getTimeSinceResponse(now) {
-        return time.diff(now, responseTime);
-    }
-
-    function setRequest(currentTimeMillis) {
-        requestTime = currentTimeMillis;
-    }
-
-    function setResponse(currentTimeMillis) {
-        responseTime = currentTimeMillis;
-    }
-
-    function getDebugString() {
-        var now = new Date();
-        var sinceUpdate = getTimeSinceUpdate(now);
-        var sinceRequest = getTimeSinceRequest(now.getTime());
-        var sinceResponse = getTimeSinceResponse(now.getTime());
-        return sinceUpdate.toFixed(1) + '⊂' + sinceRequest.toFixed(1) + '⊃' + sinceResponse.toFixed(1);
-    }
-
-    return {
-        setUpdated: setUpdated,
-        setRequest: setRequest,
-        setResponse: setResponse,
-        isExpired: isExpired,
-        isPending: isPending,
-        getDebugString: getDebugString
-    };
-};
+});

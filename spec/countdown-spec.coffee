@@ -1,4 +1,6 @@
 describe 'countdown', ->
+    beforeEach( -> $('<div id="jasmine_content"></div>').appendTo('body'))
+
     it 'should handle less than one minute', ->
         expect(countdown.getCountdown("2013-01-02T17:41:00", new Date(1322152807741))).toBe '0:52.2'
 

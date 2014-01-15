@@ -1,4 +1,6 @@
 describe 'names', ->
+    beforeEach( -> $('<div id="jasmine_content"></div>').appendTo('body'))
+
     it 'should abbreviate centrum', ->
         expect(names.abbreviate('Södertälje centrum')).toBe 'Södertälje c'
 

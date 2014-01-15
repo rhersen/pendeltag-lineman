@@ -1,18 +1,9 @@
 /*global time: false, expiry: false, names: false, countdown: false, $: false, _: false */
 
 function createStation() {
-    function updatePending() {
-        if (timer.isPending()) {
-            $('body').addClass('pending');
-        } else {
-            $('body').removeClass('pending');
-        }
-    }
-
     function setResult(resultTrains, currentTimeMillis) {
         function updateTimer() {
-            timer.setResponse(currentTimeMillis);
-            timer.setUpdated(trains.updated);
+            expiry.setState({responseTime: currentTimeMillis});
         }
 
         function getSiteId() {
@@ -51,7 +42,6 @@ function createStation() {
         trains = resultTrains;
 
         updateTimer();
-        updatePending();
         updateHtml();
         updateTable();
         bindEvent();
@@ -88,14 +78,12 @@ function createStation() {
     }
 
     function tick() {
-        $('#expired').html((timer.getDebugString()));
-
+        React.renderComponent(expiry, document.getElementById('expired'));
         React.renderComponent(Table({trains: trains}), document.getElementById('table'));
     }
 
     function sendRequest(id) {
-        timer.setRequest(new Date().getTime());
-        updatePending();
+        expiry.setState({requestTime: new Date().getTime()});
         $('#title').unbind('mouseup touchend').html(id);
         $('#predecessor').unbind('mouseup touchend').html(' ');
         $('#successor').unbind('mouseup touchend').html(' ');
@@ -110,9 +98,11 @@ function createStation() {
         });
     }
 
-    var timer = expiry.create();
+    var expiry = Expiry();
     var intervalId;
     var trains = [];
+
+    React.renderComponent(expiry, document.getElementById('expired'));
 
     return {
         setResult: setResult,
