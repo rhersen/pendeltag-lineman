@@ -1,9 +1,27 @@
-/*global time: false, expiry: false, names: false, countdown: false, $: false, _: false */
+/*global time: false, names: false, countdown: false, $: false, _: false */
+
+var Station = React.createClass({
+    getInitialState: function() {
+        return {
+            trains: [],
+            requestTime: undefined,
+            responseTime: undefined,
+            now: new Date()
+        };
+    },
+
+    render: function() {
+        return React.DOM.div({},
+            Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
+            Table({trains: this.state.trains, now: this.state.now})
+        );
+    }
+});
 
 function createStation() {
     function setResult(resultTrains, currentTimeMillis) {
         function updateTimer() {
-            expiry.setState({responseTime: currentTimeMillis});
+            reactRoot.setState({responseTime: currentTimeMillis});
         }
 
         function getSiteId() {
@@ -29,7 +47,7 @@ function createStation() {
         }
 
         function updateTable() {
-            React.renderComponent(Table({trains: trains}), document.getElementById('table'));
+            reactRoot.setState({trains: trains});
         }
 
         function bindEvent() {
@@ -78,12 +96,11 @@ function createStation() {
     }
 
     function tick() {
-        React.renderComponent(expiry, document.getElementById('expired'));
-        React.renderComponent(Table({trains: trains}), document.getElementById('table'));
+        reactRoot.setState({now: new Date()});
     }
 
     function sendRequest(id) {
-        expiry.setState({requestTime: new Date().getTime()});
+        reactRoot.setState({requestTime: new Date().getTime()});
         $('#title').unbind('mouseup touchend').html(id);
         $('#predecessor').unbind('mouseup touchend').html(' ');
         $('#successor').unbind('mouseup touchend').html(' ');
@@ -98,11 +115,11 @@ function createStation() {
         });
     }
 
-    var expiry = Expiry();
+    var reactRoot = Station();
     var intervalId;
     var trains = [];
 
-    React.renderComponent(expiry, document.getElementById('expired'));
+    React.renderComponent(reactRoot, document.getElementById('react-root'));
 
     return {
         setResult: setResult,

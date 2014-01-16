@@ -1,14 +1,10 @@
 /*global time: false, countdown: false */
 
 var Expiry = React.createClass({
-    getInitialState: function() {
-        return {
-            requestTime: undefined,
-            responseTime: undefined
-        };
-    },
-
     render: function() {
+        if (!this.props.requestTime) {
+            return React.DOM.div();
+        }
         var now = new Date().getTime();
         var timeSinceRequest = this.getTimeSinceRequest(now);
         var timeSinceResponse = this.getTimeSinceResponse(now);
@@ -19,15 +15,15 @@ var Expiry = React.createClass({
     },
 
     getTimeSinceRequest: function(now) {
-        return time.diff(now, this.state.requestTime);
+        return time.diff(now, this.props.requestTime);
     },
 
     getTimeSinceResponse: function(now) {
-        return time.diff(now, this.state.responseTime);
+        return time.diff(now, this.props.responseTime);
     },
 
     isPending: function() {
-        return !this.state.responseTime || this.state.responseTime < this.state.requestTime;
+        return !this.props.responseTime || this.props.responseTime < this.props.requestTime;
     }
 
 });
