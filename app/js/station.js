@@ -119,7 +119,7 @@ function createStation() {
     var intervalId;
     var trains = [];
 
-    React.renderComponent(reactRoot, document.getElementById('react-root'));
+    React.renderComponent(reactRoot, document.getElementById('mountpoint'));
 
     return {
         setResult: setResult,

@@ -21,7 +21,7 @@
       <span class="siteid" id="tullinge">9525</span>
       <span class="siteid" id="sodra">9530</span>
     </nav>
-    <section id="react-root"></section>
+    <section id="mountpoint"></section>
     <script>createStation().init()</script>
   </body>
 </html>
