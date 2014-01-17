@@ -75,7 +75,7 @@ function createStation() {
         };
     }
 
-    function init(interval) {
+    function init() {
         var ev = 'mouseup';
         $('#karlberg').bind(ev, getRequestSender('9510'));
         $('#sodertalje').bind(ev, getRequestSender('9520'));
@@ -89,10 +89,6 @@ function createStation() {
             intervalId = false;
             $('nav#stations').show();
         });
-
-        if (interval) {
-            intervalId = setInterval(tick, interval);
-        }
     }
 
     function tick() {
