@@ -1,5 +1,30 @@
 /*global time: false, names: false, countdown: false, $: false, _: false */
 
+var MainMenu = React.createClass({
+    render: function() {
+        function span(number, name) {
+            return React.DOM.span({
+                    id: name,
+                    className: 'siteid',
+                    onClick: function() {
+                        return station.getRequestSender(number)();
+                    }
+                },
+                number);
+        }
+
+        var spans = _.map({
+                karlberg: '9510',
+                sodertalje: '9520',
+                tullinge: '9525',
+                sodra: '9530'
+            },
+            span);
+
+        return React.DOM.nav({children: spans});
+    }
+});
+
 var Station = React.createClass({
     getInitialState: function() {
         return {
@@ -12,6 +37,7 @@ var Station = React.createClass({
 
     render: function() {
         return React.DOM.div({},
+            MainMenu(),
             Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
             Table({trains: this.state.trains, now: this.state.now})
         );
@@ -68,7 +94,7 @@ function createStation() {
     function getRequestSender(id) {
         return function() {
             sendRequest(id);
-            $('nav#stations').hide();
+//            $('nav#stations').hide();
             if (!intervalId) {
                 intervalId = setInterval(tick, 256);
             }
@@ -76,18 +102,9 @@ function createStation() {
     }
 
     function init() {
-        var ev = 'mouseup';
-        $('#karlberg').bind(ev, getRequestSender('9510'));
-        $('#sodertalje').bind(ev, getRequestSender('9520'));
-        $('#tullinge').bind(ev, getRequestSender('9525'));
-        $('#sodra').bind(ev, getRequestSender('9530'));
-
-        $('#table').addClass('mouse');
-
         $('span.clear').click(function() {
             clearInterval(intervalId);
             intervalId = false;
-            $('nav#stations').show();
         });
     }
 
@@ -119,6 +136,7 @@ function createStation() {
 
     return {
         setResult: setResult,
-        init: init
+        init: init,
+        getRequestSender: getRequestSender
     };
 }
