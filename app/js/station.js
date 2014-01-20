@@ -45,6 +45,8 @@ var RefreshMenu = React.createClass({
             },
             span);
 
+//            $('#title').html(names.abbreviate(_.first(trains).StopAreaName));
+
         return React.DOM.nav({children: spans});
     }
 });
@@ -59,50 +61,30 @@ var Station = React.createClass({
         };
     },
 
+    clear: function() {
+        clearInterval(this.state.intervalId);
+        this.setState({intervalId: undefined});
+    },
+
     render: function() {
-        var children = [
+        var children3 = [
             MainMenu(),
             Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
             Table({trains: this.state.trains, now: this.state.now})
         ];
-        return React.DOM.div({children: this.state.current ? [RefreshMenu({current: this.state.current})].concat(children) : children});
+        var children4 = this.state.current ? [RefreshMenu({current: this.state.current})].concat(children3) : children3;
+        return React.DOM.div({children: [React.DOM.span({onClick: this.clear}, '◼')].concat(children4)});
     }
 });
 
 function createStation() {
-    function setResult(resultTrains, currentTimeMillis) {
-        function updateTimer() {
-            reactRoot.setState({responseTime: currentTimeMillis});
-        }
-
-//            $('#title').html(names.abbreviate(_.first(trains).StopAreaName));
-
-        function updateTable() {
-            reactRoot.setState({trains: trains});
-            reactRoot.setState({current: parseInt(_.first(trains).SiteId, 10)});
-        }
-
-        trains = resultTrains;
-
-        updateTimer();
-        updateTable();
-    }
-
     function getRequestSender(id) {
         return function() {
             sendRequest(id);
-//            $('nav#stations').hide();
-            if (!intervalId) {
-                intervalId = setInterval(tick, 256);
+            if (!reactRoot.state.intervalId) {
+                reactRoot.setState({intervalId: setInterval(tick, 256)});
             }
         };
-    }
-
-    function init() {
-        $('span.clear').click(function() {
-            clearInterval(intervalId);
-            intervalId = false;
-        });
     }
 
     function tick() {
@@ -117,20 +99,19 @@ function createStation() {
             dataType: 'json',
             cache: false,
             success: function(result) {
-                setResult(result.DPS.Trains.DpsTrain, new Date().getTime());
+                var resultTrains = result.DPS.Trains.DpsTrain;
+                reactRoot.setState({responseTime: new Date().getTime()});
+                reactRoot.setState({trains: resultTrains});
+                reactRoot.setState({current: parseInt(_.first(resultTrains).SiteId, 10)});
             }
         });
     }
 
     var reactRoot = Station();
-    var intervalId;
-    var trains = [];
 
     React.renderComponent(reactRoot, document.getElementById('mountpoint'));
 
     return {
-        setResult: setResult,
-        init: init,
         getRequestSender: getRequestSender
     };
 }

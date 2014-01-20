@@ -9,13 +9,9 @@
   </head>
   <body>
     <script type="text/javascript" src="<%= js %>"></script>
-    <nav>
-      <span class="clear">◼</span>
-    </nav>
     <section id="mountpoint"></section>
     <script>
       var station = createStation();
-      station.init();
     </script>
   </body>
 </html>
