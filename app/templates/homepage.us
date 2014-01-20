@@ -10,9 +10,6 @@
   <body>
     <script type="text/javascript" src="<%= js %>"></script>
     <nav>
-      <span class="siteid" id="predecessor">9524</span>
-      <span class="siteid" id="title">title</span>
-      <span class="siteid" id="successor">9526</span>
       <span class="clear">◼</span>
     </nav>
     <section id="mountpoint"></section>

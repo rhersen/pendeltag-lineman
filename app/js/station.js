@@ -25,6 +25,30 @@ var MainMenu = React.createClass({
     }
 });
 
+var RefreshMenu = React.createClass({
+    render: function() {
+        function span(number, name) {
+            return React.DOM.span({
+                    id: name,
+                    className: 'siteid',
+                    onClick: function() {
+                        return station.getRequestSender(number)();
+                    }
+                },
+                number);
+        }
+
+        var spans = _.map({
+                pred: this.props.current - 1,
+                curr: this.props.current,
+                succ: this.props.current + 1
+            },
+            span);
+
+        return React.DOM.nav({children: spans});
+    }
+});
+
 var Station = React.createClass({
     getInitialState: function() {
         return {
@@ -36,11 +60,12 @@ var Station = React.createClass({
     },
 
     render: function() {
-        return React.DOM.div({},
+        var children = [
             MainMenu(),
             Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
             Table({trains: this.state.trains, now: this.state.now})
-        );
+        ];
+        return React.DOM.div({children: this.state.current ? [RefreshMenu({current: this.state.current})].concat(children) : children});
     }
 });
 
@@ -50,45 +75,17 @@ function createStation() {
             reactRoot.setState({responseTime: currentTimeMillis});
         }
 
-        function getSiteId() {
-            return parseInt(_.first(trains).SiteId, 10);
-        }
-
-        function getPredecessor() {
-            return getSiteId() - 1;
-        }
-
-        function getCurrent() {
-            return getSiteId() + 0;
-        }
-
-        function getSuccessor() {
-            return getSiteId() + 1;
-        }
-
-        function updateHtml() {
-            $('#title').html(names.abbreviate(_.first(trains).StopAreaName));
-            $('#predecessor').html(getPredecessor());
-            $('#successor').html(getSuccessor());
-        }
+//            $('#title').html(names.abbreviate(_.first(trains).StopAreaName));
 
         function updateTable() {
             reactRoot.setState({trains: trains});
-        }
-
-        function bindEvent() {
-            var ev = 'mouseup';
-            $('#predecessor').bind(ev, getRequestSender(getPredecessor()));
-            $('#title').bind(ev, getRequestSender(getCurrent()));
-            $('#successor').bind(ev, getRequestSender(getSuccessor()));
+            reactRoot.setState({current: parseInt(_.first(trains).SiteId, 10)});
         }
 
         trains = resultTrains;
 
         updateTimer();
-        updateHtml();
         updateTable();
-        bindEvent();
     }
 
     function getRequestSender(id) {
@@ -114,9 +111,6 @@ function createStation() {
 
     function sendRequest(id) {
         reactRoot.setState({requestTime: new Date().getTime()});
-        $('#title').unbind('mouseup touchend').html(id);
-        $('#predecessor').unbind('mouseup touchend').html(' ');
-        $('#successor').unbind('mouseup touchend').html(' ');
 
         $.ajax({
             url: '/departures/' + id,

@@ -24,18 +24,6 @@ describe 'station', ->
         }
     ]
 
-    it 'should set station name', ->
-        createStation().setResult(fixture)
-        expect($('#title').html()).toBe 'Femlingsberg'
-
-    it 'should set previous station', ->
-        createStation().setResult(fixture)
-        expect($('#predecessor').html()).toBe '9525'
-
-    it 'should set next station', ->
-        createStation().setResult(fixture)
-        expect($('#successor').html()).toBe '9527'
-
     it 'should set departure time', ->
         createStation().setResult(fixture)
         expect($('.table').find('time').html()).toBe '13:37'
@@ -48,8 +36,3 @@ describe 'station', ->
     it 'sets destination', ->
         createStation().setResult(fixture)
         expect($('.table .direction2 .destination').html()).toBe 'Väsby'
-
-    it 'should bind mouseup', ->
-        createStation().setResult(fixture)
-        expect($('#successor').data('events')).toBeDefined()
-        expect($('#predecessor').data('events')).toBeDefined()
