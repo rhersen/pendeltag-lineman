@@ -1,4 +1,4 @@
-/*global time: false, names: false, countdown: false, $: false, _: false */
+/*global time: false, names: false, countdown: false, _: false */
 
 function span(number, name) {
     return React.DOM.span(
@@ -90,17 +90,20 @@ function createStation() {
     function sendRequest(id) {
         reactRoot.setState({requestTime: new Date().getTime()});
 
-        $.ajax({
-            url: '/departures/' + id,
-            dataType: 'json',
-            cache: false,
-            success: function(result) {
+        var ajax = new XMLHttpRequest();
+
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                var result = JSON.parse(ajax.responseText);
                 var resultTrains = result.DPS.Trains.DpsTrain;
                 reactRoot.setState({responseTime: new Date().getTime()});
                 reactRoot.setState({trains: resultTrains});
                 reactRoot.setState({current: parseInt(_.first(resultTrains).SiteId, 10)});
             }
-        });
+        };
+
+        ajax.open("GET", '/departures/' + id, true);
+        ajax.send();
     }
 
     var reactRoot = Station();
