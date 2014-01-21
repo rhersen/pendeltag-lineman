@@ -9,7 +9,6 @@ var Expiry = React.createClass({
         var timeSinceRequest = this.getTimeSinceRequest(now);
         var timeSinceResponse = this.getTimeSinceResponse(now);
         return React.DOM.span({
-            className: this.isPending() ? 'pending' : undefined,
             children: timeSinceRequest.toFixed(1) + '/' + timeSinceResponse.toFixed(1)
         });
     },
@@ -20,10 +19,5 @@ var Expiry = React.createClass({
 
     getTimeSinceResponse: function(now) {
         return time.diff(now, this.props.responseTime);
-    },
-
-    isPending: function() {
-        return !this.props.responseTime || this.props.responseTime < this.props.requestTime;
     }
-
 });
