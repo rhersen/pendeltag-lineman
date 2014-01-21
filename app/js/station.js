@@ -108,7 +108,7 @@ function createStation() {
     }
 
     var reactRoot = Station();
-
+    React.initializeTouchEvents(true);
     React.renderComponent(reactRoot, document.getElementById('mountpoint'));
 
     return {
