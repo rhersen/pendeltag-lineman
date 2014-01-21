@@ -1,18 +1,19 @@
 /*global time: false, names: false, countdown: false, $: false, _: false */
 
+function span(number, name) {
+    return React.DOM.span(
+        {
+            id: name,
+            className: 'siteid',
+            onClick: function() {
+                return station.getRequestSender(number)();
+            }
+        },
+        name);
+}
+
 var MainMenu = React.createClass({
     render: function() {
-        function span(number, name) {
-            return React.DOM.span({
-                    id: name,
-                    className: 'siteid',
-                    onClick: function() {
-                        return station.getRequestSender(number)();
-                    }
-                },
-                number);
-        }
-
         var spans = _.map({
                 karlberg: '9510',
                 sodertalje: '9520',
@@ -27,27 +28,13 @@ var MainMenu = React.createClass({
 
 var RefreshMenu = React.createClass({
     render: function() {
-        function span(number, name) {
-            return React.DOM.span({
-                    id: name,
-                    className: 'siteid',
-                    onClick: function() {
-                        return station.getRequestSender(number)();
-                    }
-                },
-                number);
-        }
+        var collection = {};
 
-        var spans = _.map({
-                pred: this.props.current - 1,
-                curr: this.props.current,
-                succ: this.props.current + 1
-            },
-            span);
+        collection[this.props.current - 1] = this.props.current - 1;
+        collection[names.abbreviate(_.first(this.props.trains).StopAreaName)] = this.props.current;
+        collection[this.props.current + 1] = this.props.current + 1;
 
-//            $('#title').html(names.abbreviate(_.first(trains).StopAreaName));
-
-        return React.DOM.nav({children: spans});
+        return React.DOM.nav({children: _.map(collection, span)});
     }
 });
 
@@ -72,7 +59,7 @@ var Station = React.createClass({
             Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
             Table({trains: this.state.trains, now: this.state.now})
         ];
-        var children4 = this.state.current ? [RefreshMenu({current: this.state.current})].concat(children3) : children3;
+        var children4 = this.state.current ? [RefreshMenu({current: this.state.current, trains: this.state.trains})].concat(children3) : children3;
         return React.DOM.div({children: [React.DOM.span({onClick: this.clear}, '◼')].concat(children4)});
     }
 });
