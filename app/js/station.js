@@ -15,9 +15,9 @@ function span(number, name) {
 var MainMenu = React.createClass({
     render: function() {
         var spans = _.map({
-                karlberg: '9510',
-                sodertalje: '9520',
-                tullinge: '9525',
+                krlbg: '9510',
+                stlje: '9520',
+                tlnge: '9525',
                 sodra: '9530'
             },
             span);
