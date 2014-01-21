@@ -28,13 +28,14 @@ var MainMenu = React.createClass({
 
 var RefreshMenu = React.createClass({
     render: function() {
-        var collection = {};
+        var stations = {};
+        var c = this.props.current;
 
-        collection[this.props.current - 1] = this.props.current - 1;
-        collection[names.abbreviate(_.first(this.props.trains).StopAreaName)] = this.props.current;
-        collection[this.props.current + 1] = this.props.current + 1;
+        stations[c - 1] = c - 1;
+        stations[names.abbreviate(_.first(this.props.trains).StopAreaName)] = c;
+        stations[c + 1] = c + 1;
 
-        return React.DOM.nav({children: _.map(collection, span)});
+        return React.DOM.nav({children: _.map(stations, span)});
     }
 });
 
@@ -44,6 +45,7 @@ var Station = React.createClass({
             trains: [],
             requestTime: undefined,
             responseTime: undefined,
+            intervalId: undefined,
             now: new Date()
         };
     },
@@ -54,13 +56,13 @@ var Station = React.createClass({
     },
 
     render: function() {
-        var children3 = [
-            MainMenu(),
+        var children = [
+            this.state.intervalId ? React.DOM.span({onClick: this.clear}, '◼') : MainMenu(),
+            this.state.current && RefreshMenu({current: this.state.current, trains: this.state.trains}),
             Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
             Table({trains: this.state.trains, now: this.state.now})
         ];
-        var children4 = this.state.current ? [RefreshMenu({current: this.state.current, trains: this.state.trains})].concat(children3) : children3;
-        return React.DOM.div({children: [React.DOM.span({onClick: this.clear}, '◼')].concat(children4)});
+        return React.DOM.div({children: _.compact(children)});
     }
 });
 
