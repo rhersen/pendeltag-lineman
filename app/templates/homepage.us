@@ -11,7 +11,9 @@
     <script type="text/javascript" src="<%= js %>"></script>
     <section id="mountpoint"></section>
     <script>
-      var station = createStation();
+      var reactRoot = Station();
+      React.initializeTouchEvents(true);
+      React.renderComponent(reactRoot, document.getElementById('mountpoint'));
     </script>
   </body>
 </html>
