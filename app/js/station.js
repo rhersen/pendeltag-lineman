@@ -2,34 +2,25 @@
 
 function stationLink(number, name) {
 
-    function getRequestSender(id) {
-        return function() {
-            sendRequest(id);
-            if (!reactRoot.state.intervalId) {
-                reactRoot.setState({intervalId: setInterval(tick, 256)});
-            }
-        };
-    }
-
-    function tick() {
-        reactRoot.setState({now: new Date()});
+    function handleResult(result) {
+        var resultTrains = result.DPS.Trains.DpsTrain;
+        reactRoot.setState({responseTime: new Date().getTime()});
+        reactRoot.setState({trains: resultTrains});
+        reactRoot.setState({current: parseInt(_.first(resultTrains).SiteId, 10)});
     }
 
     function sendRequest(id) {
+        function callback() {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                handleResult(JSON.parse(ajax.responseText));
+            }
+        }
+
         reactRoot.setState({requestTime: new Date().getTime()});
 
         var ajax = new XMLHttpRequest();
 
-        ajax.onreadystatechange = function() {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                var result = JSON.parse(ajax.responseText);
-                var resultTrains = result.DPS.Trains.DpsTrain;
-                reactRoot.setState({responseTime: new Date().getTime()});
-                reactRoot.setState({trains: resultTrains});
-                reactRoot.setState({current: parseInt(_.first(resultTrains).SiteId, 10)});
-            }
-        };
-
+        ajax.onreadystatechange = callback;
         ajax.open("GET", '/departures/' + id, true);
         ajax.send();
     }
@@ -37,32 +28,46 @@ function stationLink(number, name) {
     return React.DOM.span({
             id: name,
             className: 'siteid',
-            onClick: getRequestSender(number) },
+            onClick: function() {
+                function tick() {
+                    reactRoot.setState({now: new Date()});
+                }
+
+                sendRequest(number);
+
+                if (!reactRoot.state.intervalId) {
+                    reactRoot.setState({intervalId: setInterval(tick, 256)});
+                }
+            } },
         name);
 }
 
 var MainMenu = React.createClass({
     render: function() {
-        var spans = _.map({
-                krlbg: '9510',
-                stlje: '9520',
-                tlnge: '9525',
-                sodra: '9530'
-            },
-            stationLink);
+        var stations = {
+            krlbg: '9510',
+            stlje: '9520',
+            tlnge: '9525',
+            sodra: '9530'
+        };
 
-        return React.DOM.nav({children: spans});
+        return React.DOM.nav({children: _.map(stations, stationLink)});
     }
 });
 
 var RefreshMenu = React.createClass({
-    render: function() {
+    getStations: function(c) {
         var stations = {};
-        var c = this.props.current;
 
         stations[c - 1] = c - 1;
         stations[names.abbreviate(_.first(this.props.trains).StopAreaName)] = c;
         stations[c + 1] = c + 1;
+
+        return stations;
+    },
+
+    render: function() {
+        var stations = this.getStations(this.props.current);
 
         return React.DOM.nav({children: _.map(stations, stationLink)});
     }
