@@ -13,11 +13,15 @@ var Expiry = React.createClass({
         });
     },
 
+    diff: function diff(toMillis, fromMillis) {
+        return (toMillis - fromMillis) / 1000;
+    },
+
     getTimeSinceRequest: function(now) {
-        return time.diff(now, this.props.requestTime);
+        return this.diff(now, this.props.requestTime);
     },
 
     getTimeSinceResponse: function(now) {
-        return time.diff(now, this.props.responseTime);
+        return this.diff(now, this.props.responseTime);
     }
 });

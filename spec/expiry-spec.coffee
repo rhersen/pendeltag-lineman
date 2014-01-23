@@ -31,3 +31,8 @@ describe 'Expiry', ->
         subject = Expiry({})
         result = jasmineReact.renderComponent(subject)
         expect(result._renderedComponent.props.children).toBeUndefined()
+
+    it 'should calculate difference in seconds', ->
+        subject = Expiry({})
+        expect(subject.diff(3333, 1000).toString()).toBe '2.333'
+        expect(subject.diff(3133, 1000).toString()).toBe '2.133'
