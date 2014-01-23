@@ -18,9 +18,11 @@ var names = {
 
         var abbreviations = [
             {pattern: /^Väster/, replacement: 'V‧'},
-            {pattern: /^Flemings/, replacement: 'F‧'}
+            {pattern: /^Flemings/, replacement: 'F‧'},
+            {pattern: /[öÖ]/, replacement: 'O'},
+            {pattern: /[åÅäÄ]/, replacement: 'A'}
         ];
 
-        return _.reduce(abbreviations.concat(getRemovalAbbreviations()), replace, name);
+        return _.reduce(abbreviations.concat(getRemovalAbbreviations()), replace, name).toUpperCase();
     }
 };
