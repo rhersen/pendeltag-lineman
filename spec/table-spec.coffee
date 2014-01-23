@@ -1,4 +1,4 @@
-describe 'time.diff', ->
+describe 'TableRow', ->
     beforeEach(->
         $('<div id="jasmine_content"></div>').appendTo('body'))
 
