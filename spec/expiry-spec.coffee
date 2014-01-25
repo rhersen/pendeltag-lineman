@@ -13,19 +13,24 @@ describe 'Expiry', ->
         subject = Station()
         jasmineReact.renderComponent(subject)
         subject.setState({requestTime: 2000, responseTime: 1000})
-        expect(subject.isPending()).toBe(true)
+        expect(subject.isPending()).toBeTruthy()
 
     it 'is not pending if request is older than response', ->
         subject = Station()
         jasmineReact.renderComponent(subject)
         subject.setState({requestTime: 2000, responseTime: 3000})
-        expect(subject.isPending()).toBe(false)
+        expect(subject.isPending()).toBeFalsy()
 
     it 'is pending if response is undefined', ->
         subject = Station()
         jasmineReact.renderComponent(subject)
         subject.setState({requestTime: 2000})
-        expect(subject.isPending()).toBe(true)
+        expect(subject.isPending()).toBeTruthy()
+
+    it 'is not pending if both request and response are undefined', ->
+        subject = Station()
+        jasmineReact.renderComponent(subject)
+        expect(subject.isPending()).toBeFalsy()
 
     it 'is empty if request is undefined', ->
         subject = Expiry({})

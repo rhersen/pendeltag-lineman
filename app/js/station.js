@@ -18,9 +18,9 @@ var Station = React.createClass({
 
     render: function() {
         return React.DOM.div({
-            className: this.isPending() ? 'pending' : undefined,
+            className: this.isPending() && 'pending',
             children: _.compact([
-            this.state.intervalId ? React.DOM.span({onClick: this.clear}, '0000') : MainMenu(),
+                this.state.intervalId ? React.DOM.span({onClick: this.clear}, '0000') : MainMenu(),
                 this.state.current && RefreshMenu({current: this.state.current, trains: this.state.trains}),
                 this.state.intervalId && Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
                 Table({trains: this.state.trains, now: this.state.now})
@@ -29,6 +29,10 @@ var Station = React.createClass({
     },
 
     isPending: function() {
-        return !this.state.responseTime || this.state.responseTime < this.state.requestTime;
+        if (!this.state.responseTime) {
+            return this.state.requestTime;
+        }
+
+        return this.state.responseTime < this.state.requestTime;
     }
 });
