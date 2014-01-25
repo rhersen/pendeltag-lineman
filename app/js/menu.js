@@ -1,10 +1,10 @@
 var MainMenu = React.createClass({
     render: function() {
         var stations = {
-            krlbg: '9510',
-            stlje: '9520',
-            tlnge: '9525',
-            sodra: '9530'
+            KBG: '9510',
+            STE: '9520',
+            TLG: '9525',
+            SDR: '9530'
         };
 
         return React.DOM.nav({children: _.map(stations, stationLink)});
