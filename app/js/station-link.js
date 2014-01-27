@@ -1,7 +1,6 @@
 function stationLink(number, name) {
 
-    function handleResult(result) {
-        var resultTrains = result.DPS.Trains.DpsTrain;
+    function handleResult(resultTrains) {
         reactRoot.setState({responseTime: new Date().getTime()});
         reactRoot.setState({trains: resultTrains});
         reactRoot.setState({current: parseInt(_.first(resultTrains).SiteId, 10)});
