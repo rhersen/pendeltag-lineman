@@ -1,5 +1,3 @@
-/*global time: false, countdown: false */
-
 var Expiry = React.createClass({
     render: function() {
         if (!this.props.requestTime) {

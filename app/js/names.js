@@ -1,5 +1,3 @@
-/*global _: false */
-
 var names = {
     abbreviate: function (name) {
 

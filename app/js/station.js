@@ -1,5 +1,3 @@
-/*global time: false, names: false, countdown: false, _: false */
-
 var Station = React.createClass({
     getInitialState: function() {
         return {
