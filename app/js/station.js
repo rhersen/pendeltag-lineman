@@ -26,6 +26,16 @@ var Station = React.createClass({
         });
     },
 
+    tick: function() {
+        this.setState({now: new Date()});
+    },
+
+    requestIsPending: function() {
+        if (!this.state.intervalId) {
+            this.setState({intervalId: setInterval(this.tick, 256)});
+        }
+    },
+
     isPending: function() {
         if (!this.state.responseTime) {
             return this.state.requestTime;

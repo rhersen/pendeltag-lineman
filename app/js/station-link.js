@@ -30,15 +30,8 @@ var StationLink = React.createClass({
         return React.DOM.span({
                 className: 'siteid',
                 onClick: function() {
-                    function tick() {
-                        reactRoot.setState({now: new Date()});
-                    }
-
                     self.sendRequest(self.props.number);
-
-                    if (!reactRoot.state.intervalId) {
-                        reactRoot.setState({intervalId: setInterval(tick, 256)});
-                    }
+                    reactRoot.requestIsPending();
                 } },
             this.props.number);
     }
