@@ -26,21 +26,29 @@ var Station = React.createClass({
         });
     },
 
-    tick: function() {
-        this.setState({now: new Date()});
-    },
-
-    requestIsPending: function() {
-        if (!this.state.intervalId) {
-            this.setState({intervalId: setInterval(this.tick, 256)});
-        }
-    },
-
     isPending: function() {
         if (!this.state.responseTime) {
             return this.state.requestTime;
         }
 
         return this.state.responseTime < this.state.requestTime;
+    },
+
+    requestIsPending: function() {
+        if (!this.state.intervalId) {
+            this.setState({intervalId: setInterval(this.tick, 0x100)});
+        }
+    },
+
+    tick: function() {
+        if (this.isExpired()) {
+            sendRequest(this.state.current);
+            this.requestIsPending();
+        }
+        this.setState({now: new Date()});
+    },
+
+    isExpired: function() {
+        return !this.isPending() && this.state.responseTime && this.state.now - this.state.responseTime > 0x4000;
     }
 });
