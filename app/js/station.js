@@ -42,7 +42,7 @@ var Station = React.createClass({
 
     tick: function() {
         if (this.isExpired()) {
-            sendRequest(this.state.current);
+            getRequestSender(new XMLHttpRequest(), this)(this.state.current);
             this.requestIsPending();
         }
         this.setState({now: new Date()});
