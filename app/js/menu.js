@@ -1,5 +1,7 @@
 var MainMenu = React.createClass({
     render: function() {
+        var name = {
+        };
         var stations = [
             '9510',
             '9000',
@@ -18,7 +20,7 @@ var MainMenu = React.createClass({
         ];
 
         return React.DOM.nav({children: _.map(stations, function(number) {
-            return StationLink({number: number});
+            return StationLink({number: number, name: name[number]});
         })});
     }
 });
