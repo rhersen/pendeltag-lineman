@@ -10,6 +10,6 @@ var StationLink = React.createClass({
                     reactRoot.requestIsPending();
                 }
             },
-            this.props.number, this.props.name);
+            names.get(this.props.number));
     }
 });

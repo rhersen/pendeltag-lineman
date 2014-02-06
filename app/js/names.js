@@ -1,10 +1,10 @@
 var names = {
-    abbreviate: function (name) {
+    abbreviate: function(name) {
 
         function getRemovalAbbreviations() {
             return _.map(
                 [/^Upplands /, /^Stockholms /, /^T-/, /amn$/, /entrum$/],
-                function (removal) {
+                function(removal) {
                     return {pattern: removal, replacement: ''};
                 }
             );
@@ -22,5 +22,19 @@ var names = {
         ];
 
         return _.reduce(abbreviations.concat(getRemovalAbbreviations()), replace, name).toUpperCase();
+    },
+
+    get: function(id) {
+        var name = {
+            '9530': 'Södra',
+            '9531': 'Årstaberg',
+            '9529': 'Älvsjö',
+            '9528': 'Stuvsta',
+            '9527': 'Huddinge',
+            '9526': 'Flemingsberg',
+            '9525': 'Tullinge',
+            '9523': 'Rönninge'
+        };
+        return name[id] || id;
     }
 };
