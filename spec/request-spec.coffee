@@ -10,7 +10,8 @@ describe 'getRequestSender', ->
                 @status = 200
                 @responseText = '[{"SiteId": 9525}]'
                 @onreadystatechange()
-        reactRoot = {setState: ->}
+        reactRoot =
+            setState: ->
 
     it 'calls open', ->
         spyOn ajax, 'open'
@@ -20,4 +21,7 @@ describe 'getRequestSender', ->
     it 'invokes callback', ->
         spyOn reactRoot, 'setState'
         (getRequestSender ajax, reactRoot)()
-        ((expect reactRoot.setState).toHaveBeenCalledWith {trains:[{"SiteId": 9525}]})
+        (expect reactRoot.setState).toHaveBeenCalledWith
+            trains:[
+                "SiteId": 9525
+            ]
