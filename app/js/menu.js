@@ -24,15 +24,18 @@ var MainMenu = React.createClass({
 });
 
 var RefreshMenu = React.createClass({
-    getStations: function(c) {
-        return [c - 1, c, c + 1];
-    },
-
     render: function() {
-        var stations = this.getStations(this.props.current);
+        return React.DOM.nav({
+            className: 'refresh',
+            children: _.map(getStations(this.props.current), stationLink)
+        });
 
-        return React.DOM.nav({className: 'refresh', children: _.map(stations, function(number) {
+        function getStations(c) {
+            return [c - 1, c, c + 1];
+        }
+
+        function stationLink(number) {
             return StationLink({number: number});
-        })});
+        }
     }
 });

@@ -17,7 +17,10 @@ var TableRow = React.createClass({
             className: 'direction' + this.props.train.JourneyDirection,
             children: [
                 React.DOM.time({}, this.getTime(dateTime)),
-                React.DOM.span({className: 'destination'}, names.abbreviate(this.props.train.Destination)),
+                React.DOM.span(
+                    {className: 'destination'},
+                    names.abbreviate(this.props.train.Destination)
+                ),
                 Countdown({dateTime: dateTime, now: this.props.now})
             ]
         });
@@ -27,8 +30,13 @@ var TableRow = React.createClass({
 var Table = React.createClass({
     render: function() {
         var now = this.props.now;
-        return React.DOM.div({className: 'table', children: this.props.trains.map(function(train) {
+        return React.DOM.div({
+            className: 'table',
+            children: this.props.trains.map(tableRow)
+        });
+
+        function tableRow(train) {
             return TableRow({train: train, now: now});
-        })});
+        }
     }
 });

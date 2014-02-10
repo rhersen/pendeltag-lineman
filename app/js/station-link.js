@@ -6,7 +6,11 @@ var StationLink = React.createClass({
             {
                 className: 'siteid',
                 onClick: function() {
-                    getRequestSender(new XMLHttpRequest(), reactRoot)(self.props.number);
+                    var requestSender = getRequestSender(
+                        new XMLHttpRequest(),
+                        reactRoot
+                    );
+                    requestSender(self.props.number);
                     reactRoot.requestIsPending();
                 }
             },

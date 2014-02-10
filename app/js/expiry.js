@@ -6,9 +6,10 @@ var Expiry = React.createClass({
         var now = new Date().getTime();
         var timeSinceRequest = this.getTimeSinceRequest(now);
         var timeSinceResponse = this.getTimeSinceResponse(now);
-        return React.DOM.span({
-            children: timeSinceRequest.toFixed(1) + '/' + timeSinceResponse.toFixed(1)
-        });
+        return React.DOM.span(
+            {},
+            timeSinceRequest.toFixed(1) + '/' + timeSinceResponse.toFixed(1)
+        );
     },
 
     diff: function diff(toMillis, fromMillis) {

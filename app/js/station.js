@@ -15,15 +15,41 @@ var Station = React.createClass({
     },
 
     render: function() {
+        var self = this;
+
         return React.DOM.div({
             className: this.isPending() && 'pending',
             children: _.compact([
-                this.state.intervalId ? React.DOM.span({onClick: this.clear}, '0000') : MainMenu(),
-                this.state.current && RefreshMenu({current: this.state.current, trains: this.state.trains}),
-                this.state.intervalId && Expiry({requestTime: this.state.requestTime, responseTime: this.state.responseTime}),
-                Table({trains: this.state.trains, now: this.state.now})
+                mainMenuOrStop(),
+                refreshMenu(this.state),
+                expiry(this.state),
+                table(this.state)
             ])
         });
+
+        function mainMenuOrStop() {
+            return self.state.intervalId ?
+                React.DOM.span({onClick: self.clear}, '0000') :
+                MainMenu();
+        }
+
+        function refreshMenu(state) {
+            return state.current && RefreshMenu({
+                current: state.current,
+                trains: state.trains
+            });
+        }
+
+        function expiry(state) {
+            return state.intervalId && Expiry({
+                requestTime: state.requestTime,
+                responseTime: state.responseTime
+            });
+        }
+
+        function table(state) {
+            return Table({trains: state.trains, now: state.now});
+        }
     },
 
     isPending: function() {
@@ -49,6 +75,7 @@ var Station = React.createClass({
     },
 
     isExpired: function() {
-        return !this.isPending() && this.state.now - this.state.responseTime > 0x4000;
+        return !this.isPending() &&
+            this.state.now - this.state.responseTime > 0x4000;
     }
 });

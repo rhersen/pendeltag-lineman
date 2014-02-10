@@ -15,7 +15,7 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application
         eqeqeq: true,
         forin: true,
         immed: true,
-        latedef: true,
+        latedef: false,
         noarg: true,
         noempty: true,
         nonew: true,

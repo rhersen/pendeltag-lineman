@@ -50,14 +50,13 @@ var Countdown = React.createClass({
 
         var countdown = millisSinceMidnight(time) - getNow(nowTime);
 
-        if (countdown < 0) {
-            return '-' + format(-countdown);
-        } else {
-            return format(countdown);
-        }
+        return countdown < 0 ? '-' + format(-countdown) : format(countdown);
     },
 
     render: function() {
-        return React.DOM.span({className: 'countdown'}, this.getCountdown(this.props.dateTime, this.props.now));
+        return React.DOM.span(
+            {className: 'countdown'},
+            this.getCountdown(this.props.dateTime, this.props.now)
+        );
     }
 });

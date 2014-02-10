@@ -1,5 +1,18 @@
 var names = {
     abbreviate: function(name) {
+        var replacements = [
+            {pattern: /^Väster/, replacement: 'V‧'},
+            {pattern: /^Flemings/, replacement: 'F‧'},
+            {pattern: /[öÖ]/, replacement: 'O'},
+            {pattern: /[åÅäÄ]/, replacement: 'A'}
+        ];
+
+        var abbreviations = replacements.concat(getRemovalAbbreviations());
+        return _.reduce(abbreviations, replace, name).toUpperCase();
+
+        function replace(name, abbreviation) {
+            return name.replace(abbreviation.pattern, abbreviation.replacement);
+        }
 
         function getRemovalAbbreviations() {
             return _.map(
@@ -9,19 +22,6 @@ var names = {
                 }
             );
         }
-
-        function replace(name, abbreviation) {
-            return name.replace(abbreviation.pattern, abbreviation.replacement);
-        }
-
-        var abbreviations = [
-            {pattern: /^Väster/, replacement: 'V‧'},
-            {pattern: /^Flemings/, replacement: 'F‧'},
-            {pattern: /[öÖ]/, replacement: 'O'},
-            {pattern: /[åÅäÄ]/, replacement: 'A'}
-        ];
-
-        return _.reduce(abbreviations.concat(getRemovalAbbreviations()), replace, name).toUpperCase();
     },
 
     get: function(id) {
