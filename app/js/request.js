@@ -14,7 +14,8 @@ function getRequestSender(ajax, reactRoot) {
             reactRoot.setState({responseTime: new Date().getTime()});
             reactRoot.setState({trains: resultTrains});
             reactRoot.setState({
-                  current: parseInt(_.first(resultTrains).SiteId, 10) }
+                  current: parseInt(_.first(resultTrains).SiteId, 10)
+               }
             );
          }
       }
