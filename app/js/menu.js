@@ -1,6 +1,9 @@
 var MainMenu = React.createClass({
    render: function() {
       var stations = [
+         '9507',
+         '9508',
+         '9509',
          '9510',
          '9000',
          '9530',

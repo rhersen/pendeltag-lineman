@@ -26,6 +26,9 @@ var names = {
 
    get: function(id) {
       var name = {
+         '9507': 'Helenelund',
+         '9509': 'Solna',
+         '9510': 'Karlberg',
          '9530': 'Södra',
          '9531': 'Årstaberg',
          '9529': 'Älvsjö',
