@@ -2,13 +2,11 @@ var names = {
    abbreviate: function(name) {
       var replacements = [
          {pattern: /^Väster/, replacement: 'V‧'},
-         {pattern: /^Flemings/, replacement: 'F‧'},
-         {pattern: /[öÖ]/, replacement: 'O'},
-         {pattern: /[åÅäÄ]/, replacement: 'A'}
+         {pattern: /^Flemings/, replacement: 'F‧'}
       ];
 
       var abbreviations = replacements.concat(getRemovalAbbreviations());
-      return _.reduce(abbreviations, replace, name).toUpperCase();
+      return _.reduce(abbreviations, replace, name);
 
       function replace(name, abbreviation) {
          return name.replace(abbreviation.pattern, abbreviation.replacement);
