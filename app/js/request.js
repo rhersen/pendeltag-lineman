@@ -6,8 +6,14 @@ function getRequestSender(ajax, reactRoot) {
       ajax.send();
 
       function callback() {
-         if (ajax.readyState === 4 && ajax.status === 200) {
-            handleResult(JSON.parse(ajax.responseText));
+         if (ajax.readyState === 4) {
+            if (ajax.status === 200) {
+               handleResult(JSON.parse(ajax.responseText));
+            }
+
+            if (ajax.status === 401) {
+               reactRoot.setState({unauthorized: true});
+            }
          }
 
          function handleResult(resultTrains) {

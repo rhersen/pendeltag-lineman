@@ -5,7 +5,8 @@ var Station = React.createClass({
          requestTime: undefined,
          responseTime: undefined,
          intervalId: undefined,
-         now: new Date()
+         now: new Date(),
+         unauthorized: false
       };
    },
 
@@ -16,6 +17,10 @@ var Station = React.createClass({
 
    render: function() {
       var self = this;
+
+      if (this.state.unauthorized) {
+         return React.DOM.h1({}, 'unauthorized');
+      }
 
       return React.DOM.div({
          className: this.isPending() && 'pending',
