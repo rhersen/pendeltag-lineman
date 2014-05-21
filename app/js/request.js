@@ -17,12 +17,11 @@ function getRequestSender(ajax, reactRoot) {
          }
 
          function handleResult(resultTrains) {
-            reactRoot.setState({responseTime: new Date().getTime()});
-            reactRoot.setState({trains: resultTrains});
             reactRoot.setState({
-                  current: parseInt(_.first(resultTrains).SiteId, 10)
-               }
-            );
+               responseTime: new Date().getTime(),
+               trains: resultTrains,
+               current: parseInt(_.first(resultTrains).SiteId, 10)
+            });
          }
       }
    };

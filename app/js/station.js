@@ -1,5 +1,5 @@
 var Station = React.createClass({
-   getInitialState: function() {
+   getInitialState: function () {
       return {
          trains: [],
          requestTime: undefined,
@@ -10,16 +10,16 @@ var Station = React.createClass({
       };
    },
 
-   clear: function() {
+   clear: function () {
       clearInterval(this.state.intervalId);
       this.setState({intervalId: undefined});
    },
 
-   render: function() {
+   render: function () {
       var self = this;
 
       if (this.state.unauthorized) {
-         return React.DOM.h1({}, 'unauthorized');
+         return KeyForm();
       }
 
       return React.DOM.div({
@@ -57,7 +57,7 @@ var Station = React.createClass({
       }
    },
 
-   isPending: function() {
+   isPending: function () {
       if (!this.state.responseTime) {
          return this.state.requestTime;
       }
@@ -65,13 +65,13 @@ var Station = React.createClass({
       return this.state.responseTime < this.state.requestTime;
    },
 
-   requestIsPending: function() {
+   requestIsPending: function () {
       if (!this.state.intervalId) {
          this.setState({intervalId: setInterval(this.tick, 0x100)});
       }
    },
 
-   tick: function() {
+   tick: function () {
       if (this.isExpired()) {
          getRequestSender(new XMLHttpRequest(), this)(this.state.current);
          this.requestIsPending();
@@ -79,7 +79,7 @@ var Station = React.createClass({
       this.setState({now: new Date()});
    },
 
-   isExpired: function() {
+   isExpired: function () {
       return !this.isPending() &&
          this.state.now - this.state.responseTime > 0x4000;
    }
