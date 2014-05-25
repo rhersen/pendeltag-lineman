@@ -1,33 +1,40 @@
 var MainMenu = React.createClass({
-   render: function() {
-      var stations = [
-         '9507',
-         '9508',
-         '9509',
-         '9510',
-         '9000',
-         '9530',
-         '9531',
-         '9529',
-         '9528',
-         '9527',
-         '9526',
-         '9525',
-         '9524',
-         '9523',
-         '9522',
-         '9521',
-         '9520'
-      ];
+   getInitialState: function () {
+      return {
+         stations: [
+            '9506',
+            '9520'
+         ]
+      };
+   },
 
-      return React.DOM.nav({children: _.map(stations, function(number) {
+   componentDidMount: function () {
+      var self = this;
+      var request = new XMLHttpRequest();
+      request.open('GET', '/stations', true);
+
+      request.onload = function () {
+         if (this.status >= 200 && this.status < 400) {
+            self.handleStations(JSON.parse(this.response));
+         }
+      };
+
+      request.send();
+   },
+
+   handleStations: function (stations) {
+      this.setState({stations: stations});
+   },
+
+   render: function () {
+      return React.DOM.nav({children: _.map(this.state.stations, function (number) {
          return StationLink({number: number});
       })});
    }
 });
 
 var RefreshMenu = React.createClass({
-   render: function() {
+   render: function () {
       return React.DOM.nav({
          className: 'refresh',
          children: _.map(getStations(this.props.current), stationLink)
