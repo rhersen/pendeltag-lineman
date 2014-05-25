@@ -27,9 +27,11 @@ var MainMenu = React.createClass({
    },
 
    render: function () {
-      return React.DOM.nav({children: _.map(this.state.stations, function (number) {
-         return StationLink({number: number});
-      })});
+      return React.DOM.nav({
+         children: _.map(this.state.stations, function (number) {
+            return StationLink({number: number});
+         })
+      });
    }
 });
 
