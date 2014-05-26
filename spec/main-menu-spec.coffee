@@ -14,5 +14,5 @@ describe 'MainMenu', ->
   it 'gets one child from set state', ->
     subject = MainMenu()
     result = jasmineReact.renderComponent subject
-    subject.setState stations: [9524]
-    expect(getNumber result._renderedComponent.props.children[0]).toBe 9524
+    subject.setState stations: ['9524']
+    expect(getNumber result._renderedComponent.props.children[0]).toBe '9524'
