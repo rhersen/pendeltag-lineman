@@ -4,6 +4,6 @@ window.StationLink = React.createClass
       className: 'siteid'
       onClick: () =>
         requestSender = getRequestSender new XMLHttpRequest(), reactRoot
-        requestSender @props.number
+        requestSender @props.SiteId
         reactRoot.requestIsPending()
-      names.get @props.number
+      @props.StopAreaName or @props.SiteId

@@ -4,7 +4,7 @@ describe 'MainMenu', ->
   )
 
   getNumber = (child) ->
-    child.props.number
+    child.props.SiteId
 
   it 'gets two children from initial state', ->
     subject = MainMenu()

@@ -29,7 +29,7 @@ var MainMenu = React.createClass({
    render: function () {
       return React.DOM.nav({
          children: _.map(this.state.stations, function (el) {
-            return StationLink({number: el.SiteId || el});
+            return StationLink({SiteId: el.SiteId || el});
          })
       });
    }
@@ -47,7 +47,7 @@ var RefreshMenu = React.createClass({
       }
 
       function stationLink(number) {
-         return StationLink({number: number});
+         return StationLink({SiteId: number});
       }
    }
 });
