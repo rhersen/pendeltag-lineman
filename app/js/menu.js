@@ -2,8 +2,8 @@ var MainMenu = React.createClass({
    getInitialState: function () {
       return {
          stations: [
-            '9506',
-            '9520'
+            {SiteId: '9506'},
+            {SiteId: '9520'}
          ]
       };
    },
@@ -29,7 +29,7 @@ var MainMenu = React.createClass({
    render: function () {
       return React.DOM.nav({
          children: _.map(this.state.stations, function (el) {
-            return StationLink({SiteId: el.SiteId || el});
+            return StationLink(el);
          })
       });
    }
