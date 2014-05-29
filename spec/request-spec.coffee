@@ -3,6 +3,7 @@ describe 'getRequestSender', ->
   reactRoot = null
 
   beforeEach ->
+    affix('div#jasmine_content')
     ajax =
       open: ->
       send: ->
