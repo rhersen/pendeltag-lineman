@@ -41,6 +41,7 @@ var Station = React.createClass({
       function refreshMenu(state) {
          return state.current && RefreshMenu({
             current: state.current,
+            StopAreaName: state.StopAreaName,
             trains: state.trains
          });
       }

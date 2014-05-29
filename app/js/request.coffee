@@ -5,6 +5,7 @@ window.getRequestSender = (ajax, reactRoot) ->
       responseTime: new Date().getTime(),
       trains: resultTrains,
       current: if first then parseInt first.SiteId, 10 else 0
+      StopAreaName: if first then first.StopAreaName else ''
 
   (id) ->
     callback = () ->

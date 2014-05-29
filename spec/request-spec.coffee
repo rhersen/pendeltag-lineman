@@ -18,7 +18,7 @@ describe 'getRequestSender', ->
     beforeEach ->
       ajax =
         open: ->
-        send: send '[{"SiteId": 9525}]'
+        send: send '[{"SiteId": 9525, "StopAreaName": "Tullinge"}]'
 
     it 'calls open', ->
       spyOn ajax, 'open'
@@ -30,10 +30,9 @@ describe 'getRequestSender', ->
       (getRequestSender ajax, reactRoot)()
       (expect reactRoot.setState).toHaveBeenCalledWith
         responseTime: jasmine.any Number
-        current: jasmine.any Number
-        trains: [
-          "SiteId": 9525
-        ]
+        current: 9525
+        StopAreaName: 'Tullinge'
+        trains: jasmine.any Array
 
   describe 'without data', ->
     beforeEach ->
@@ -47,4 +46,5 @@ describe 'getRequestSender', ->
       (expect reactRoot.setState).toHaveBeenCalledWith
         responseTime: jasmine.any Number
         current: jasmine.any Number
+        StopAreaName: ''
         trains: []
