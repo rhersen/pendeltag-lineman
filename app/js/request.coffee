@@ -1,9 +1,10 @@
 window.getRequestSender = (ajax, reactRoot) ->
   handleResult = (resultTrains) ->
+    first = _.first(resultTrains)
     reactRoot.setState
       responseTime: new Date().getTime(),
       trains: resultTrains,
-      current: parseInt _.first(resultTrains).SiteId, 10
+      current: if first then parseInt first.SiteId, 10 else 0
 
   (id) ->
     callback = () ->
