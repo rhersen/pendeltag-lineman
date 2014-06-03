@@ -3,12 +3,17 @@ var Expiry = React.createClass({
       if (!this.props.requestTime) {
          return React.DOM.div();
       }
-      var now = new Date().getTime();
+      var now = this.props.now.getTime();
       var timeSinceRequest = this.getTimeSinceRequest(now);
       var timeSinceResponse = this.getTimeSinceResponse(now);
-      return React.DOM.span(
+
+      function formatTimeSinceResponse() {
+         return timeSinceResponse ? '/' + timeSinceResponse.toFixed(1) : '';
+      }
+
+      return React.DOM.div(
          {},
-         timeSinceRequest.toFixed(1) + '/' + timeSinceResponse.toFixed(1)
+         timeSinceRequest.toFixed(1) + formatTimeSinceResponse()
       );
    },
 

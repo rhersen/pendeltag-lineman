@@ -12,7 +12,15 @@ var Station = React.createClass({
 
    clear: function () {
       clearInterval(this.state.intervalId);
-      this.setState({intervalId: undefined});
+      this.setState({
+         trains: [],
+         requestTime: undefined,
+         responseTime: undefined,
+         intervalId: undefined,
+         current: undefined,
+         StopAreaName: undefined,
+         unauthorized: false
+      });
    },
 
    render: function () {
@@ -49,7 +57,8 @@ var Station = React.createClass({
       function expiry(state) {
          return state.intervalId && Expiry({
             requestTime: state.requestTime,
-            responseTime: state.responseTime
+            responseTime: state.responseTime,
+            now: state.now
          });
       }
 

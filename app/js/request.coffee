@@ -16,7 +16,9 @@ window.getRequestSender = (ajax, reactRoot) ->
         if (ajax.status is 401)
           reactRoot.setState unauthorized: true
 
-    reactRoot.setState requestTime: new Date().getTime()
+    reactRoot.setState
+      requestTime: new Date().getTime()
+      now: new Date()
     ajax.onreadystatechange = callback
     ajax.open "GET", '/departures/' + id, true
     ajax.send()
