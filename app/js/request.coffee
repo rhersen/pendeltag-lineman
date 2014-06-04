@@ -1,15 +1,15 @@
 window.getRequestSender = (ajax, reactRoot) ->
   handleResult = (resultTrains) ->
-    reactRoot.responseReceived(resultTrains)
+    reactRoot.responseReceived resultTrains
 
   (id) ->
     callback = () ->
-      if (ajax.readyState is 4)
-        if (ajax.status is 200)
+      if ajax.readyState is 4
+        if ajax.status is 200
           handleResult JSON.parse ajax.responseText
 
         if (ajax.status is 401)
-          reactRoot.setState unauthorized: true
+          reactRoot.responseReceived false
 
     reactRoot.requestSent()
     ajax.onreadystatechange = callback

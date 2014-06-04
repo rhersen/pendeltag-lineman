@@ -89,13 +89,19 @@ var Station = React.createClass({
    },
 
    responseReceived: function (resultTrains) {
-      var first = _.first(resultTrains);
-      this.setState({
-         responseTime: new Date().getTime(),
-         trains: resultTrains,
-         current: first ? parseInt(first.SiteId, 10) : 0,
-         StopAreaName: first ? first.StopAreaName : ''
-      });
+      if (resultTrains) {
+         var first = _.first(resultTrains);
+         this.setState({
+            responseTime: new Date().getTime(),
+            trains: resultTrains,
+            current: first ? parseInt(first.SiteId, 10) : 0,
+            StopAreaName: first ? first.StopAreaName : ''
+         });
+      } else {
+         this.setState({
+            unauthorized: true
+         });
+      }
    },
 
    tick: function () {
