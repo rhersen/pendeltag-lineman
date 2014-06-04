@@ -81,6 +81,23 @@ var Station = React.createClass({
       }
    },
 
+   requestSent: function () {
+      this.setState({
+         requestTime: new Date().getTime(),
+         now: new Date()
+      });
+   },
+
+   responseReceived: function (resultTrains) {
+      var first = _.first(resultTrains);
+      this.setState({
+         responseTime: new Date().getTime(),
+         trains: resultTrains,
+         current: first ? parseInt(first.SiteId, 10) : 0,
+         StopAreaName: first ? first.StopAreaName : ''
+      });
+   },
+
    tick: function () {
       if (this.isExpired()) {
          getRequestSender(new XMLHttpRequest(), this)(this.state.current);

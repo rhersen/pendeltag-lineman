@@ -12,7 +12,8 @@ describe 'getRequestSender', ->
   beforeEach ->
     affix('div#jasmine_content')
     reactRoot =
-      setState: ->
+      requestSent: ->
+      responseReceived: ->
 
   describe 'with data', ->
     beforeEach ->
@@ -26,13 +27,9 @@ describe 'getRequestSender', ->
       ((expect ajax.open).toHaveBeenCalledWith 'GET', '/departures/9525', true)
 
     it 'invokes callback', ->
-      spyOn reactRoot, 'setState'
+      spyOn reactRoot, 'responseReceived'
       (getRequestSender ajax, reactRoot)()
-      (expect reactRoot.setState).toHaveBeenCalledWith
-        responseTime: jasmine.any Number
-        current: 9525
-        StopAreaName: 'Tullinge'
-        trains: jasmine.any Array
+      (expect reactRoot.responseReceived).toHaveBeenCalledWith jasmine.any Array
 
   describe 'without data', ->
     beforeEach ->
@@ -41,10 +38,6 @@ describe 'getRequestSender', ->
         send: send '[]'
 
     it 'invokes callback', ->
-      spyOn reactRoot, 'setState'
+      spyOn reactRoot, 'responseReceived'
       (getRequestSender ajax, reactRoot)()
-      (expect reactRoot.setState).toHaveBeenCalledWith
-        responseTime: jasmine.any Number
-        current: jasmine.any Number
-        StopAreaName: ''
-        trains: []
+      (expect reactRoot.responseReceived).toHaveBeenCalledWith []

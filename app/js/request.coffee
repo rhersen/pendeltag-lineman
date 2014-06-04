@@ -1,11 +1,6 @@
 window.getRequestSender = (ajax, reactRoot) ->
   handleResult = (resultTrains) ->
-    first = _.first(resultTrains)
-    reactRoot.setState
-      responseTime: new Date().getTime(),
-      trains: resultTrains,
-      current: if first then parseInt first.SiteId, 10 else 0
-      StopAreaName: if first then first.StopAreaName else ''
+    reactRoot.responseReceived(resultTrains)
 
   (id) ->
     callback = () ->
@@ -16,9 +11,7 @@ window.getRequestSender = (ajax, reactRoot) ->
         if (ajax.status is 401)
           reactRoot.setState unauthorized: true
 
-    reactRoot.setState
-      requestTime: new Date().getTime()
-      now: new Date()
+    reactRoot.requestSent()
     ajax.onreadystatechange = callback
     ajax.open "GET", '/departures/' + id, true
     ajax.send()
