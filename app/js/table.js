@@ -19,7 +19,7 @@ var TableRow = React.createClass({
             React.DOM.time({}, this.getTime(dateTime)),
             React.DOM.span(
                {className: 'destination'},
-               names.abbreviate(this.props.train.Destination)
+               abbreviate(this.props.train.Destination)
             ),
             Countdown({dateTime: dateTime, now: this.props.now})
          ]

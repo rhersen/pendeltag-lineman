@@ -7,6 +7,6 @@ window.StationLink = React.createClass
         requestSender @props.SiteId
         reactRoot.requestIsPending()
       if @props.StopAreaName
-        names.abbreviate @props.StopAreaName
+        abbreviate @props.StopAreaName
       else
         @props.SiteId
