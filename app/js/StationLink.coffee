@@ -6,4 +6,7 @@ window.StationLink = React.createClass
         requestSender = getRequestSender new XMLHttpRequest(), reactRoot
         requestSender @props.SiteId
         reactRoot.requestIsPending()
-      @props.StopAreaName or @props.SiteId
+      if @props.StopAreaName
+        names.abbreviate @props.StopAreaName
+      else
+        @props.SiteId
