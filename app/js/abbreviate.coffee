@@ -1,4 +1,5 @@
-getRemovalAbbreviations = () -> [
+getRemovalAbbreviations = () ->
+  [
     /^Upplands /
     /^Stockholms /
     /^T-/
@@ -14,8 +15,9 @@ replace = (name, abbreviation) ->
 
 window.abbreviate = (name) ->
   replacements = [
-    pattern: /^Väster/
-    replacement: 'V‧'
+    { pattern: /^Väster/, replacement: 'V‧' }
+    { pattern: /al$/, replacement: 'alen' }
   ]
 
-  replacements.concat(getRemovalAbbreviations()).reduce replace, name
+  r = replacements.concat(getRemovalAbbreviations()).reduce replace, name
+  r.slice(0, 1).toUpperCase() + r.slice 1

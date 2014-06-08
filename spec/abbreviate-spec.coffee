@@ -14,13 +14,13 @@ describe 'abbreviate', ->
         expect(abbreviate('Upplands Väsby')).toBe 'Väsby'
 
     it 'should remove Stockholms', ->
-        expect(abbreviate('Stockholms södra')).toBe 'södra'
+        expect(abbreviate('Stockholms södra')).toBe 'Södra'
 
     it 'should remove T-', ->
-        expect(abbreviate('T-Centralen')).toBe 'Centralen'
+        expect(abbreviate('Stockholms central')).toBe 'Centralen'
 
     it 'should remove strand', ->
         expect(abbreviate('Farsta strand')).toBe 'Farsta'
 
     it 'should perform multiple abbreviations', ->
-        expect(abbreviate('Upplands hamn')).toBe 'h'
+        expect(abbreviate('Upplands hamn')).toBe 'H'
