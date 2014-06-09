@@ -1,7 +1,7 @@
 window.StationLink = React.createClass
   render: () ->
     return React.DOM.li
-      className: 'siteid'
+      className: @props.className or 'siteid'
       onClick: () =>
         requestSender = getRequestSender new XMLHttpRequest(), reactRoot
         requestSender @props.SiteId

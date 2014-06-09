@@ -33,24 +33,25 @@ var Station = React.createClass({
       return React.DOM.div({
          className: this.isPending() && 'pending',
          children: _.compact([
-            mainMenuOrStop(),
+            mainMenuOrNothing(),
             refreshMenu(this.state),
             expiry(this.state),
             table(this.state)
          ])
       });
 
-      function mainMenuOrStop() {
-         return self.state.intervalId ?
-            React.DOM.span({onClick: self.clear}, '0000') :
-            MainMenu();
+      function mainMenuOrNothing() {
+         if (!self.state.intervalId) {
+            return MainMenu();
+         }
       }
 
       function refreshMenu(state) {
          return state.current && RefreshMenu({
             current: state.current,
             StopAreaName: state.StopAreaName,
-            trains: state.trains
+            trains: state.trains,
+            clear: self.clear
          });
       }
 
