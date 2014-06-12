@@ -16,8 +16,11 @@ describe 'abbreviate', ->
     it 'should remove Stockholms', ->
         expect(abbreviate('Stockholms södra')).toBe 'Södra'
 
-    it 'should remove T-', ->
+    it 'should add en to central', ->
         expect(abbreviate('Stockholms central')).toBe 'Centralen'
+
+    it 'should not add en to dal', ->
+        expect(abbreviate('Ulriksdal')).toBe 'Ulriksdal'
 
     it 'should remove strand', ->
         expect(abbreviate('Farsta strand')).toBe 'Farsta'

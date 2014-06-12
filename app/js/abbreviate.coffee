@@ -16,7 +16,7 @@ replace = (name, abbreviation) ->
 window.abbreviate = (name) ->
   replacements = [
     { pattern: /^Väster/, replacement: 'V‧' }
-    { pattern: /al$/, replacement: 'alen' }
+    { pattern: /ral$/, replacement: 'ralen' }
   ]
 
   r = replacements.concat(getRemovalAbbreviations()).reduce replace, name
