@@ -62,7 +62,7 @@ describe 'Station', ->
     it 'sets state according to response', ->
       subject = Station()
       jasmineReact.renderComponent(subject)
-      subject.responseReceived [
+      subject.responseReceived trains: [
         SiteId: '9525'
         StopAreaName: 'Tullinge'
         Destination: 'Centralen'
