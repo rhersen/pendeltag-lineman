@@ -91,12 +91,11 @@ var Station = React.createClass({
 
    responseReceived: function (result) {
       if (result.trains) {
-         var first = _.first(result.trains);
          this.setState({
             responseTime: new Date().getTime(),
             trains: result.trains,
-            current: first ? parseInt(first.SiteId, 10) : 0,
-            StopAreaName: first ? first.StopAreaName : ''
+            current: parseInt(result.SiteId, 10),
+            StopAreaName: result.StopAreaName
          });
       } else {
          this.setState({

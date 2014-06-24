@@ -62,12 +62,13 @@ describe 'Station', ->
     it 'sets state according to response', ->
       subject = Station()
       jasmineReact.renderComponent(subject)
-      subject.responseReceived trains: [
-        SiteId: '9525'
-        StopAreaName: 'Tullinge'
-        Destination: 'Centralen'
-        ExpectedDateTime: ''
-      ]
+      subject.responseReceived
+        SiteId: '9525',
+        StopAreaName: 'Tullinge',
+        trains: [
+          Destination: 'Centralen'
+          ExpectedDateTime: ''
+        ]
       (expect subject.state.trains).toEqual jasmine.any Array
       (expect subject.state.responseTime).toEqual jasmine.any Number
       (expect subject.state.current).toBe 9525
