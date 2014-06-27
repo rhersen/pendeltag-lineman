@@ -20,6 +20,6 @@ window.MainMenu = React.createClass
     return React.DOM.div {},
       React.DOM.nav className: 'pull-left', children: _.map @state.stations.northwest, (el) -> StationLink el
       React.DOM.nav className: 'pull-right', children: _.map @state.stations.northeast, (el) -> StationLink el
+      React.DOM.nav className: 'pull-left narrow', children: _.map @state.stations.southwest, (el) -> StationLink el
       React.DOM.nav className: 'center', children: _.map @state.stations.central, (el) -> StationLink el
-      React.DOM.nav className: 'pull-left', children: _.map @state.stations.southwest, (el) -> StationLink el
-      React.DOM.nav className: 'pull-right', children: _.map @state.stations.southeast, (el) -> StationLink el
+      React.DOM.nav className: 'pull-right narrow', children: _.map @state.stations.southeast, (el) -> StationLink el
