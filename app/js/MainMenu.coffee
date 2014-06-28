@@ -1,6 +1,12 @@
 window.MainMenu = React.createClass
   getInitialState: () ->
-    stations: {northwest:[ {SiteId: '9506'}, {SiteId: '9520'} ]}
+    stations: {
+      northwest:[]
+      northeast:[]
+      central:[]
+      southwest:[]
+      southeast:[]
+    }
 
   componentDidMount: () ->
     self = this
@@ -18,8 +24,12 @@ window.MainMenu = React.createClass
 
   render: () ->
     return React.DOM.div {},
-      React.DOM.nav className: 'pull-left', children: _.map @state.stations.northwest, (el) -> StationLink el
-      React.DOM.nav className: 'pull-right', children: _.map @state.stations.northeast, (el) -> StationLink el
-      React.DOM.nav className: 'pull-left narrow', children: _.map @state.stations.southwest, (el) -> StationLink el
-      React.DOM.nav className: 'center', children: _.map @state.stations.central, (el) -> StationLink el
-      React.DOM.nav className: 'pull-right narrow', children: _.map @state.stations.southeast, (el) -> StationLink el
+      React.DOM.nav className: 'pull-left', children: (StationLink s for s in @state.stations.northwest[0...-1])
+      React.DOM.nav className: 'pull-right', children: (StationLink s for s in @state.stations.northeast[0...-1])
+      React.DOM.nav className: 'pull-left narrow', children: (StationLink s for s in @state.stations.northwest[-1...])
+      React.DOM.nav className: 'center', children: (StationLink s for s in @state.stations.central[...1])
+      React.DOM.nav className: 'pull-right narrow', children: (StationLink s for s in @state.stations.northeast[-1...])
+      React.DOM.nav className: 'center wide', children: (StationLink s for s in @state.stations.central[1...-1])
+      React.DOM.nav className: 'pull-left narrow', children: (StationLink s for s in @state.stations.southwest)
+      React.DOM.nav className: 'center', children: (StationLink s for s in @state.stations.central[-1...])
+      React.DOM.nav className: 'pull-right narrow', children: (StationLink s for s in @state.stations.southeast)
