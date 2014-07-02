@@ -4,6 +4,7 @@ getRemovalAbbreviations = () ->
     /^Stockholms /
     /^T-/
     /amn$/
+    /yd$/
     /entrum$/
     /\sstrand$/
   ].map (removal) ->

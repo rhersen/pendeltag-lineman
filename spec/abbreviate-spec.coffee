@@ -7,6 +7,9 @@ describe 'abbreviate', ->
     it 'should abbreviate hamn', ->
         expect(abbreviate('Södertälje hamn')).toBe 'Södertälje h'
 
+    it 'should abbreviate hamn', ->
+        expect(abbreviate('Södertälje syd')).toBe 'Södertälje s'
+
     it 'should abbreviate Väster', ->
         expect(abbreviate('Västerhaninge')).toBe 'V‧haninge'
 
