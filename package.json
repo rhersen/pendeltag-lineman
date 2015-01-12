@@ -8,10 +8,13 @@
     "company": "ACME, Inc."
   },
   "dependencies": {
-    "lineman": "~0.21.3"
+    "lineman": "~0.34"
   },
   "engines": {
     "node": "~>0.10.5",
     "npm": "~>1.2.18"
+  },
+  "devDependencies": {
+    "lineman-less": "^0.1.0"
   }
 }
