@@ -1,30 +1,34 @@
 function abbreviate(name) {
-    var removals = [/^Upplands /, /^Stockholms /, /^T-/, /amn$/, /yd$/, /entrum$/, /\sstrand$/];
+    return _.compose.apply(this, [capitalize].concat(replacements(), removals()))(name);
 
-    var replacements = [
-        {
-            pattern: /^Väster/,
-            replacement: 'V‧'
-        }, {
-            pattern: /ral$/,
-            replacement: 'ralen'
-        }
-    ];
-
-    var r = replacements.concat(getRemovalAbbreviations()).reduce(replace, name);
-
-    return r.slice(0, 1).toUpperCase() + r.slice(1);
-
-    function getRemovalAbbreviations() {
-        return removals.map(function (removal) {
-            return {
-                pattern: removal,
-                replacement: ''
-            };
-        });
+    function capitalize(r) {
+        return r.slice(0, 1).toUpperCase() + r.slice(1);
     }
 
-    function replace(name, abbreviation) {
-        return name.replace(abbreviation.pattern, abbreviation.replacement);
+    function replacements() {
+        return _.map(
+            [
+                {pattern: /^Väster/, replacement: 'V‧'},
+                {pattern: /ral$/, replacement: 'ralen'}
+            ],
+            getReplacementAbbreviation);
+    }
+
+    function removals() {
+        return _.map(
+            [/^Upplands /, /^Stockholms /, /^T-/, /amn$/, /yd$/, /entrum$/, /\sstrand$/],
+            getRemovalAbbreviation);
+    }
+
+    function getReplacementAbbreviation(abbreviation) {
+        return function (name) {
+            return name.replace(abbreviation.pattern, abbreviation.replacement);
+        };
+    }
+
+    function getRemovalAbbreviation(removal) {
+        return function (name) {
+            return name.replace(removal, '');
+        };
     }
 }
