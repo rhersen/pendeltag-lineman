@@ -114,6 +114,6 @@ var Station = React.createClass({
 
    isExpired: function () {
       return !this.isPending() &&
-         this.state.now - this.state.responseTime > 0x4000;
+         this.state.now - this.state.responseTime > 30000;
    }
 });
