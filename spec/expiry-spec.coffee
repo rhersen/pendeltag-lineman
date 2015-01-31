@@ -8,8 +8,8 @@ describe 'Expiry', ->
         subject = Expiry
             requestTime: 1322152747147
             now: new Date(1322152807741)
-        jasmineReact.renderComponent(subject)
-        expect(subject.getTimeSinceRequest(1322152807741)).toBe(60.594)
+        c = jasmineReact.renderComponent(subject)
+        expect(c.getTimeSinceRequest(1322152807741)).toBe(60.594)
 
     it 'renders time since request/response', ->
         subject = Expiry
@@ -33,5 +33,6 @@ describe 'Expiry', ->
 
     it 'should calculate difference in seconds', ->
         subject = Expiry {}
-        expect(subject.diff(3333, 1000).toString()).toBe '2.333'
-        expect(subject.diff(3133, 1000).toString()).toBe '2.133'
+        result = jasmineReact.renderComponent subject
+        expect(result.diff(3333, 1000).toString()).toBe '2.333'
+        expect(result.diff(3133, 1000).toString()).toBe '2.133'

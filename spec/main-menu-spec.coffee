@@ -6,7 +6,7 @@ describe 'MainMenu', ->
     $('<div id="jasmine_content"></div>').appendTo('body')
     subject = MainMenu()
     result = jasmineReact.renderComponent subject
-    subject.setState stations:
+    result.setState stations:
       northwest: [ {SiteId: '9525'}, {SiteId: '9524'}, {SiteId: '9523'} ]
       northeast: [ {SiteId: '9625'}, {SiteId: '9624'}, {SiteId: '9623'} ]
       central: [ {SiteId: '9025'}, {SiteId: '9024'}, {SiteId: '9023'} ]
