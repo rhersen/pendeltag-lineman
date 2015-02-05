@@ -15,6 +15,6 @@ var RefreshMenu = React.createClass({
         }), React.DOM.div({
             className: 'link',
             onClick: this.props.clear
-        }, 'Klar'));
+        }, 'Meny'));
     }
 });
