@@ -1,3 +1,5 @@
+/** @jsx React.DOM */
+
 var Station = React.createClass({
    getInitialState: function () {
       return {
