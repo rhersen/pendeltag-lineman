@@ -10,19 +10,11 @@ window.MainMenu = React.createClass({
             }
         };
     },
-    componentDidMount: function () {
-        var request;
-        var self = this;
 
-        request = new XMLHttpRequest();
-        request.open('GET', '/stations', true);
-        request.onload = function () {
-            if (this.status >= 200 && this.status < 400) {
-                self.handleStations(JSON.parse(this.response));
-            }
-        };
-        request.send();
+    componentDidMount: function () {
+        getStations(this.handleStations);
     },
+
     handleStations: function (stations) {
         this.setState({
             stations: stations

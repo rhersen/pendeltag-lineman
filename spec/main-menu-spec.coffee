@@ -5,6 +5,7 @@ describe 'MainMenu', ->
   beforeEach(->
     $('<div id="jasmine_content"></div>').appendTo('body')
     subject = MainMenu()
+    spyOn window, 'getStations'
     result = jasmineReact.renderComponent subject
     result.setState stations:
       northwest: [ {SiteId: '9525'}, {SiteId: '9524'}, {SiteId: '9523'} ]

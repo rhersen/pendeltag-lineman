@@ -21,3 +21,14 @@ function getRequestSender(ajax, reactRoot) {
         return ajax.send();
     };
 }
+
+function getStations(callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', '/stations', true);
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            callback(JSON.parse(this.response));
+        }
+    };
+    request.send();
+}

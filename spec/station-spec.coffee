@@ -1,8 +1,9 @@
 describe 'Station', ->
   c = Station()
 
-  beforeEach(->
-    $('<div id="jasmine_content"></div>').appendTo('body'))
+  beforeEach ->
+    $('<div id="jasmine_content"></div>').appendTo('body')
+    spyOn window, 'getStations'
 
   describe 'isPending', ->
     it 'true if request is newer than response', ->
