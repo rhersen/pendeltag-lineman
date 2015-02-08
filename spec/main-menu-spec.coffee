@@ -18,7 +18,7 @@ describe 'MainMenu', ->
   )
 
   it 'children are where they should be', ->
-    getNumber = (child) -> child.props.SiteId
+    getNumber = (child) -> child.props.key
     expect(getNumber c[0].props.children[0]).toBe '9525'
     expect(getNumber c[1].props.children[1]).toBe '9624'
 
