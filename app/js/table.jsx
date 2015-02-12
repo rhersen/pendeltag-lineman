@@ -29,7 +29,7 @@ var Table = React.createClass({
         return <div className="table">{this.props.trains.map(tableRow)}</div>;
 
         function tableRow(train) {
-            return <TableRow train={train} now={now} key={train.ExpectedDateTime + train.JourneyDirection} />
+            return <TableRow train={train} now={now} key={train.Key} />
         }
     }
 });

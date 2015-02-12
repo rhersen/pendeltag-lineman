@@ -10,8 +10,8 @@ function getRequestSender(ajax, reactRoot) {
                 if (ajax.status === 200) {
                     handleResult(JSON.parse(ajax.responseText));
                 }
-                if (ajax.status === 401) {
-                    return reactRoot.responseReceived(false);
+                if (ajax.status >= 400) {
+                    return reactRoot.responseReceived(ajax.status);
                 }
             }
         };
